@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PawPau — El flash warning en mi canal es real</title>
+<meta name="description" content="PawPau · Streamer en Twitch. El flash warning en mi canal es real.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Bricolage+Grotesque:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="landing-body">
+
+<!-- ===== Navbar ===== -->
+<nav class="navbar-pp" id="navbar">
+  <div class="navbar-inner">
+    <a class="navbar-brand" href="index.html#inicio">
+      <span class="brand-logo brand-logo--pp">🐾</span>
+      <span>Paw<span class="brand-accent">Pau</span></span>
+    </a>
+    <button class="navbar-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    <div class="navbar-links" id="navLinks">
+      <a href="index.html#sobre">Sobre</a>
+      <a href="index.html#playlist">Música</a>
+      <a href="index.html#redes">Redes</a>
+      <a href="index.html#apoyo">Apóyame</a>
+      <div class="nav-dropdown" id="navDropdown">
+        <button class="nav-dropdown-trigger" id="dropdownTrigger" type="button" aria-haspopup="true" aria-expanded="false">
+          Tools <span class="dropdown-arrow">▾</span>
+        </button>
+        <div class="nav-dropdown-menu" role="menu">
+          <a href="sorteo.html" class="nav-dropdown-item" data-tool="sorteo" role="menuitem">
+            <span class="dropdown-icon">🎲</span>
+            <div class="dropdown-text">
+              <strong>Sorteo</strong>
+              <span class="dropdown-desc">Ganadores al azar</span>
+            </div>
+          </a>
+          <a href="torneo.html" class="nav-dropdown-item" data-tool="torneo" role="menuitem">
+            <span class="dropdown-icon">🏆</span>
+            <div class="dropdown-text">
+              <strong>Torneo</strong>
+              <span class="dropdown-desc">Bracket eliminación</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <a href="index.html#faq">FAQ</a>
+      <a href="index.html#contacto">Contacto</a>
+    </div>
+    <a class="navbar-cta" href="https://www.twitch.tv/pawpau" target="_blank" rel="noopener">
+      <span class="navbar-live-dot" id="navLiveDot"></span>
+      <span>Twitch</span>
+    </a>
+  </div>
+</nav>
+
+<div class="paw-bg" aria-hidden="true">
+  <span class="paw paw-1">🐾</span>
+  <span class="paw paw-2">🐾</span>
+  <span class="paw paw-3">🐾</span>
+  <span class="paw paw-4">🐾</span>
+  <span class="paw paw-5">🐾</span>
+  <span class="paw paw-6">🐾</span>
+</div>
+
+<div class="shell shell--landing">
+  <!-- ===== Hero ===== -->
+  <section class="hero-pp" id="inicio">
+    <div class="hero-avatar-wrap">
+      <span class="avatar-ring"></span>
+      <span class="avatar-glow"></span>
+      <img class="hero-avatar"
+           src="https://unavatar.io/twitch/pawpau"
+           alt="PawPau"
+           onerror="this.onerror=null;this.style.display='none';document.getElementById('avatarFallback').style.display='flex'">
+      <div class="avatar-fallback" id="avatarFallback">🐾</div>
+      <span class="live-badge live-badge--hero" id="liveBadge">
+        <span class="live-dot"></span>
+        <span class="live-label">Verificando…</span>
+      </span>
+    </div>
+
+    <h1 class="hero-name">
+      Paw<span class="hero-name-accent">Pau</span>
+    </h1>
+    <p class="hero-tagline">𝐄𝐥 𝐟𝐥𝐚𝐬𝐡 𝐰𝐚𝐫𝐧𝐢𝐧𝐠 𝐞𝐧 𝐦𝐢 𝐜𝐚𝐧𝐚𝐥 𝐞𝐬 𝐫𝐞𝐚𝐥</p>
+
+    <div class="live-info" id="liveInfo" style="display:none">
+      <div class="live-info-title" id="liveTitle">—</div>
+      <div class="live-info-meta">
+        <span id="liveGame">—</span>
+        <span class="dot-sep">·</span>
+        <span id="liveViewers">—</span>
+      </div>
+    </div>
+
+    <div class="hero-cta">
+      <a class="btn-twitch" href="https://www.twitch.tv/pawpau" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="20" height="20">
+          <path d="M4 2v18h6v4l4-4h4l6-6V2H4zm16 11l-3 3h-4l-3 3v-3H6V4h14v9zM17 6h-2v6h2V6zm-5 0h-2v6h2V6z"/>
+        </svg>
+        <span id="ctaLabel">Ver en Twitch</span>
+      </a>
+      <a class="btn-discord" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="20" height="20">
+          <path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09c-.01-.02-.04-.03-.07-.03c-1.5.26-2.93.71-4.27 1.33c-.01 0-.02.01-.03.02c-2.72 4.07-3.47 8.03-3.1 11.95c0 .02.01.04.03.05c1.8 1.32 3.53 2.12 5.24 2.65c.03.01.06 0 .07-.02c.4-.55.76-1.13 1.07-1.74c.02-.04 0-.08-.04-.09c-.57-.22-1.11-.48-1.64-.78c-.04-.02-.04-.08-.01-.11c.11-.08.22-.17.33-.25a.08.08 0 0 1 .08-.01c3.44 1.57 7.15 1.57 10.55 0a.08.08 0 0 1 .08.01c.11.09.22.17.33.26c.04.03.04.09-.01.11c-.52.31-1.07.56-1.64.78c-.04.01-.05.06-.04.09c.32.61.68 1.19 1.07 1.74c.03.01.06.02.09.01c1.72-.53 3.45-1.33 5.25-2.65c.02-.01.03-.03.03-.05c.44-4.53-.73-8.46-3.1-11.95c-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.83 2.12-1.89 2.12z"/>
+        </svg>
+        <span>Discord</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== Sobre mí ===== -->
+  <section class="about-pp" id="sobre">
+    <h2 class="section-title">🐾 Sobre PawPau</h2>
+    <p class="about-text">
+      Me dicen Paw, tomo mucho cafecito, hablo sin parar, me río por todo y cuento historias que rara vez termino.
+    </p>
+    <div class="about-stats">
+      <div class="stat">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-label">Flash warning</div>
+        <div class="stat-sub">No es decoración</div>
+      </div>
+      <div class="stat">
+        <div class="stat-icon">🌎</div>
+        <div class="stat-label">Español</div>
+        <div class="stat-sub">Comunidad LATAM</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Redes sociales ===== -->
+  <section class="socials-pp" id="redes">
+    <h2 class="section-title">📡 Encuéntrame</h2>
+    <div class="socials-grid">
+      <a class="social-card sc-twitch" href="https://www.twitch.tv/pawpau" target="_blank" rel="noopener">
+        <span class="sc-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/>
+          </svg>
+        </span>
+        <span class="sc-name">Twitch</span>
+        <span class="sc-handle">@pawpau</span>
+      </a>
+      <a class="social-card sc-discord" href="https://discord.com/invite/KEHBuY6NWt" target="_blank" rel="noopener">
+        <span class="sc-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+          </svg>
+        </span>
+        <span class="sc-name">Discord</span>
+        <span class="sc-handle">Únete al server</span>
+      </a>
+      <a class="social-card sc-instagram" href="https://www.instagram.com/pawpau" target="_blank" rel="noopener">
+        <span class="sc-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+          </svg>
+        </span>
+        <span class="sc-name">Instagram</span>
+        <span class="sc-handle">@pawpau</span>
+      </a>
+      <a class="social-card sc-tiktok" href="https://www.tiktok.com/@pawpau" target="_blank" rel="noopener">
+        <span class="sc-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.002-.001.002.001a2.895 2.895 0 0 1 3.183-4.51v-3.5a6.329 6.329 0 0 0-5.394 10.692 6.33 6.33 0 0 0 10.857-4.424V8.687a8.182 8.182 0 0 0 4.773 1.526V6.79a4.831 4.831 0 0 1-1.003-.104z"/>
+          </svg>
+        </span>
+        <span class="sc-name">TikTok</span>
+        <span class="sc-handle">@pawpau</span>
+      </a>
+      <a class="social-card sc-kick" href="https://kick.com/paw-pau" target="_blank" rel="noopener">
+        <span class="sc-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M1 2h6v5h2V2h6v3h2v3h2v8h-2v3h-2v3H9v-5H7v5H1V2zm15 6V5h-2V8h-2v3h2v2h2v3h2V11h-2V8h2z"/>
+          </svg>
+        </span>
+        <span class="sc-name">Kick</span>
+        <span class="sc-handle">@paw-pau</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== Sponsor ===== -->
+  <section class="sponsor-pp" id="apoyo">
+    <h2 class="section-title">💖 Apóyame</h2>
+    <p class="section-sub">Si te gusta el contenido, puedes apoyarme directamente. ¡Cualquier ayuda significa muchísimo!</p>
+    <a class="sponsor-card" href="https://esponsor.com/pawpau" target="_blank" rel="noopener">
+      <div class="sponsor-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      </div>
+      <div class="sponsor-info">
+        <span class="sponsor-name">Esponsor</span>
+        <span class="sponsor-handle">esponsor.com/pawpau</span>
+      </div>
+      <span class="sponsor-cta">Apoyar →</span>
+    </a>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="faq-pp" id="faq">
+    <h2 class="section-title">❓ Preguntas frecuentes</h2>
+    <p class="section-sub">Lo que más me preguntan en stream.</p>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>¿Cuándo haces stream?</summary>
+        <div class="faq-answer">Mis horarios son super variables. La forma más segura de saber cuándo estoy en vivo es seguirme en Twitch y activar las notificaciones, o estar en el Discord donde aviso cuando voy a empezar.</div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Cómo me uno a la comunidad?</summary>
+        <div class="faq-answer">Pásate por el Discord y preséntate en el canal de bienvenida. Ahí compartimos memes, organizamos coops y nos pasamos a saludar.</div>
+      </details>
+      <details class="faq-item">
+        <summary>¿Cómo te puedo apoyar?</summary>
+        <div class="faq-answer">Lo más fácil: seguirme en Twitch, dejar like a los clips y compartir con quien creas que le va a gustar.</div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ===== Contacto ===== -->
+  <section class="contact-pp" id="contacto">
+    <h2 class="section-title">📩 Contacto</h2>
+    <p class="section-sub">Para sponsors, colabs o consultas de negocios.</p>
+    <a class="contact-card" href="mailto:contacto@pawpau.tv">
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+      </div>
+      <div class="contact-info">
+        <span class="contact-label">Business email</span>
+        <span class="contact-value">contacto@pawpau.tv</span>
+      </div>
+      <span class="contact-cta">Escribir →</span>
+    </a>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer-pp">
+    <div class="footer-paws">🐾 🐾 🐾</div>
+    <p>Hecho con cariño para la comunidad de PawPau</p>
+    <p class="muted">Status en vivo vía <a href="https://decapi.me" target="_blank" rel="noopener">decapi.me</a> · Avatar vía unavatar.io</p>
+  </footer>
+</div>
+
+<!-- FAB Spotify -->
+<div class="fab-spotify-wrap" id="fabSpotify">
+  <div class="fab-spotify-panel" id="spotifyPanel" aria-hidden="true">
+    <div class="fab-panel-head">
+      <span class="fab-panel-title">🎵 Lo que suena en mis streams</span>
+      <button class="fab-panel-close" id="spotifyClose" aria-label="Cerrar">✕</button>
+    </div>
+    <iframe
+      id="spotifyIframe"
+      src="https://open.spotify.com/embed/playlist/2DjwiuasPB1QBrFSM6sG6q?utm_source=generator&theme=0&autoplay=1"
+      width="100%" height="380"
+      frameborder="0"
+      allowfullscreen=""
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy"
+      title="Playlist de PawPau en Spotify"></iframe>
+    <div class="fab-panel-note">💡 Pulsa play — los navegadores bloquean autoplay con sonido hasta que interactúes.</div>
+  </div>
+  <button class="fab-spotify" id="spotifyToggle" aria-label="Abrir playlist de Spotify" type="button">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" aria-hidden="true">
+      <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.56.3z"/>
+    </svg>
+    <span class="fab-tooltip fab-tooltip--left">Mi <strong>playlist</strong></span>
+    <span class="fab-pulse-ring fab-pulse-spotify"></span>
+  </button>
+</div>
+
+<!-- FAB Redragon -->
+<a class="fab-redragon" href="https://www.redragonshop.com" target="_blank" rel="noopener" aria-label="Colaboración con Redragon">
+  <img class="fab-icon" src="img/redragon.png" alt="Redragon">
+  <span class="fab-tooltip">Soy parte del Team de los mejores periféricos !</span>
+  <span class="fab-pulse-ring"></span>
+</a>
+
+<script src="js/landing.js"></script>
+</body>
+</html>

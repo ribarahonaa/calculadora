@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sorteo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Bricolage+Grotesque:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="landing-body tool-page">
+
+<!-- ===== Navbar ===== -->
+<nav class="navbar-pp" id="navbar">
+  <div class="navbar-inner">
+    <a class="navbar-brand" href="index.html#inicio">
+      <span class="brand-logo brand-logo--pp">🐾</span>
+      <span>Paw<span class="brand-accent">Pau</span></span>
+    </a>
+    <button class="navbar-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    <div class="navbar-links" id="navLinks">
+      <a href="index.html#sobre">Sobre</a>
+      <a href="index.html#playlist">Música</a>
+      <a href="index.html#redes">Redes</a>
+      <a href="index.html#apoyo">Apóyame</a>
+      <div class="nav-dropdown active" id="navDropdown">
+        <button class="nav-dropdown-trigger" id="dropdownTrigger" type="button" aria-haspopup="true" aria-expanded="false">
+          Tools <span class="dropdown-arrow">▾</span>
+        </button>
+        <div class="nav-dropdown-menu" role="menu">
+          <a href="sorteo.html" class="nav-dropdown-item active" data-tool="sorteo" role="menuitem">
+            <span class="dropdown-icon">🎲</span>
+            <div class="dropdown-text">
+              <strong>Sorteo</strong>
+              <span class="dropdown-desc">Ganadores al azar</span>
+            </div>
+          </a>
+          <a href="torneo.html" class="nav-dropdown-item" data-tool="torneo" role="menuitem">
+            <span class="dropdown-icon">🏆</span>
+            <div class="dropdown-text">
+              <strong>Torneo</strong>
+              <span class="dropdown-desc">Bracket eliminación</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <a href="index.html#faq">FAQ</a>
+      <a href="index.html#contacto">Contacto</a>
+    </div>
+    <a class="navbar-cta" href="https://www.twitch.tv/pawpau" target="_blank" rel="noopener">
+      <span class="navbar-live-dot" id="navLiveDot"></span>
+      <span>Twitch</span>
+    </a>
+  </div>
+</nav>
+
+<div class="paw-bg" aria-hidden="true">
+  <span class="paw paw-1">🐾</span>
+  <span class="paw paw-2">🐾</span>
+  <span class="paw paw-3">🐾</span>
+  <span class="paw paw-4">🐾</span>
+  <span class="paw paw-5">🐾</span>
+  <span class="paw paw-6">🐾</span>
+</div>
+
+<div class="shell">
+
+  <h1>🎲 Sorteo</h1>
+  <p class="subtitle">Pega tu lista de participantes (uno por línea), elige cuántos ganadores quieres y sortea con un solo clic.</p>
+
+  <div class="sorteo-grid">
+    <!-- Form -->
+    <div class="card">
+      <h2>Configuración</h2>
+      <label for="participantes">Participantes</label>
+      <textarea id="participantes" placeholder="Juan Pérez&#10;María González&#10;Pedro Soto&#10;..."></textarea>
+      <div class="stats">
+        <span id="conteo">0 participantes</span>
+        <a href="#" id="cargarEjemplo">cargar ejemplo</a>
+      </div>
+
+      <div class="row" style="margin-top:8px">
+        <div>
+          <label for="nGanadores">Número de ganadores</label>
+          <input type="number" id="nGanadores" min="1" value="1">
+        </div>
+        <div>
+          <label for="titulo">Título (opcional)</label>
+          <input type="text" id="titulo" placeholder="Sorteo de cumpleaños">
+        </div>
+      </div>
+
+      <div class="check">
+        <input type="checkbox" id="permitirRepetidos">
+        <label for="permitirRepetidos">Permitir nombres duplicados (más entradas = más oportunidades)</label>
+      </div>
+
+      <div class="actions">
+        <button class="btn-primary" id="sortear">🎲 Sortear ganadores</button>
+        <button class="btn-secondary" id="mezclar">🔀 Mezclar</button>
+        <button class="btn-danger" id="limpiar">🗑 Limpiar</button>
+      </div>
+      <div class="error hidden" id="error"></div>
+    </div>
+
+    <!-- Results -->
+    <div class="results empty" id="results"></div>
+  </div>
+
+  <!-- Modal ganadores con tombola integrada -->
+  <div id="winnersModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content modal-winners">
+      <button class="modal-close" id="winnersClose" aria-label="Cerrar">✕</button>
+      <div class="champion-modal-inner">
+        <div class="trofeo-big" id="modalTrofeo">🎲</div>
+        <div class="champion-label" id="winnersTitle">Sorteando...</div>
+        <div class="rolling in-modal" id="modalTombola"></div>
+        <div id="winnersModalList" class="winners-modal-list"></div>
+        <div class="modal-error hidden" id="modalError"></div>
+        <div class="modal-actions" id="modalActions" style="display:none">
+          <button class="btn-primary" id="winnersAgain">🎲 Sortear de nuevo</button>
+          <button class="btn-secondary" id="winnersDismiss">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAB Spotify -->
+<div class="fab-spotify-wrap" id="fabSpotify">
+  <div class="fab-spotify-panel" id="spotifyPanel" aria-hidden="true">
+    <div class="fab-panel-head">
+      <span class="fab-panel-title">🎵 Lo que suena en mis streams</span>
+      <button class="fab-panel-close" id="spotifyClose" aria-label="Cerrar">✕</button>
+    </div>
+    <iframe
+      id="spotifyIframe"
+      src="https://open.spotify.com/embed/playlist/2DjwiuasPB1QBrFSM6sG6q?utm_source=generator&theme=0&autoplay=1"
+      width="100%" height="380"
+      frameborder="0"
+      allowfullscreen=""
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy"
+      title="Playlist de PawPau en Spotify"></iframe>
+    <div class="fab-panel-note">💡 Pulsa play — los navegadores bloquean autoplay con sonido hasta que interactúes.</div>
+  </div>
+  <button class="fab-spotify" id="spotifyToggle" aria-label="Abrir playlist de Spotify" type="button">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" aria-hidden="true">
+      <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.56.3z"/>
+    </svg>
+    <span class="fab-tooltip fab-tooltip--left">Mi <strong>playlist</strong></span>
+    <span class="fab-pulse-ring fab-pulse-spotify"></span>
+  </button>
+</div>
+
+<!-- FAB Redragon -->
+<a class="fab-redragon" href="https://www.redragonshop.com" target="_blank" rel="noopener" aria-label="Colaboración con Redragon">
+  <img class="fab-icon" src="img/redragon.png" alt="Redragon">
+  <span class="fab-tooltip">Mi colab con <strong>Redragon</strong></span>
+  <span class="fab-pulse-ring"></span>
+</a>
+
+<script src="js/utils.js"></script>
+<script src="js/sorteo.js"></script>
+<script src="js/landing.js"></script>
+</body>
+</html>

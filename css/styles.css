@@ -1454,6 +1454,38 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   isolation: isolate;
   background: #000;
 }
+.flash-settings-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.5);
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.2s, border-color 0.2s;
+}
+.flash-settings-btn svg { display: block; }
+.flash-settings-btn:hover {
+  background: rgba(0,0,0,0.85);
+  border-color: #fff;
+  transform: translateY(-1px);
+}
+@media (max-width: 480px) {
+  .flash-settings-btn span { display: none; }
+  .flash-settings-btn { padding: 8px; }
+}
 .hero-pp::before {
   content: "";
   position: absolute;
@@ -2679,12 +2711,32 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   padding: 32px 28px;
   max-width: 480px;
   width: 100%;
-  box-shadow: 0 24px 80px rgba(0,0,0,0.6), 0 0 40px rgba(245, 158, 11, 0.25);
   text-align: center;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6), 0 0 40px rgba(245, 158, 11, 0.25);
+  animation: pwShake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) 1;
 }
 .photo-warn-icon {
   font-size: 3rem;
   margin-bottom: 12px;
+  display: inline-block;
+  animation: pwIconPulse 0.7s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.7));
+}
+@keyframes pwShake {
+  0%, 100% { transform: translateX(0); }
+  10%      { transform: translateX(-8px) rotate(-0.5deg); }
+  20%      { transform: translateX(8px)  rotate(0.5deg); }
+  30%      { transform: translateX(-6px); }
+  40%      { transform: translateX(6px); }
+  50%      { transform: translateX(-4px); }
+  60%      { transform: translateX(4px); }
+  70%      { transform: translateX(-2px); }
+  80%      { transform: translateX(2px); }
+}
+@keyframes pwIconPulse {
+  0%, 100% { transform: scale(1)    rotate(0deg); }
+  25%      { transform: scale(1.18) rotate(-6deg); }
+  75%      { transform: scale(1.18) rotate(6deg); }
 }
 .photo-warn-title {
   margin: 0 0 12px;

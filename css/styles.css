@@ -2094,6 +2094,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   cursor: pointer;
 }
 @media (max-width: 880px) {
+  .navbar-brand { margin-right: auto; }
   .navbar-toggle { display: grid; place-items: center; order: 3; }
   .navbar-cta { order: 2; padding: 8px 12px; }
   .navbar-cta span:not(.navbar-live-dot) { display: none; }

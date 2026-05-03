@@ -9,30 +9,32 @@
   function setDisplay(el, v) { if (el) el.style.display = v; }
   function toggleClass(el, cls, on) { if (el) el.classList.toggle(cls, on); }
 
+  function eachBadge(fn) {
+    document.querySelectorAll('.live-badge').forEach(fn);
+  }
+
   function setOffline() {
-    const badge = $('liveBadge');
-    if (badge) {
-      badge.classList.remove('is-live');
-      const lbl = badge.querySelector('.live-label');
+    eachBadge(b => {
+      b.classList.remove('is-live');
+      const lbl = b.querySelector('.live-label');
       if (lbl) lbl.textContent = 'Offline';
-    }
+    });
     setDisplay($('liveInfo'), 'none');
-    setText($('ctaLabel'), 'Ver canal');
+    document.querySelectorAll('.cta-label').forEach(el => el.textContent = 'Ver canal');
     toggleClass($('navLiveDot'), 'is-live', false);
   }
 
   function setLive(uptimeText, title, game, viewers) {
-    const badge = $('liveBadge');
-    if (badge) {
-      badge.classList.add('is-live');
-      const lbl = badge.querySelector('.live-label');
+    eachBadge(b => {
+      b.classList.add('is-live');
+      const lbl = b.querySelector('.live-label');
       if (lbl) lbl.textContent = `EN VIVO · ${uptimeText}`;
-    }
+    });
     setDisplay($('liveInfo'), 'block');
     setText($('liveTitle'), title || 'Transmisión en curso');
     setText($('liveGame'), game || '—');
     setText($('liveViewers'), viewers ? `👁 ${viewers} viendo` : '👁 viewers');
-    setText($('ctaLabel'), 'Ver stream');
+    document.querySelectorAll('.cta-label').forEach(el => el.textContent = 'Ver stream');
     toggleClass($('navLiveDot'), 'is-live', true);
   }
 
@@ -156,6 +158,41 @@
   document.querySelectorAll('[data-open-photo-warn]').forEach(el => {
     el.addEventListener('click', e => { e.preventDefault(); window.openPhotoWarn(); });
   });
+
+  // Hero carrousel (manual)
+  const heroTrack = $('heroTrack');
+  const heroDots = $('heroDots');
+  if (heroTrack && heroDots) {
+    const slides = Array.from(heroTrack.querySelectorAll('.hero-slide'));
+    let idx = 0;
+
+    slides.forEach((slide, i) => {
+      const nameEl = slide.querySelector('.hero-name');
+      const name = nameEl ? nameEl.textContent.trim() : `Slide ${i + 1}`;
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'hero-dot';
+      dot.setAttribute('role', 'tab');
+      dot.setAttribute('aria-label', name);
+      dot.setAttribute('data-name', name);
+      dot.addEventListener('click', () => go(i));
+      heroDots.appendChild(dot);
+    });
+    const dots = Array.from(heroDots.children);
+
+    function go(i) {
+      idx = (i + slides.length) % slides.length;
+      slides.forEach((s, k) => s.classList.toggle('is-active', k === idx));
+      dots.forEach((d, k) => d.classList.toggle('is-active', k === idx));
+    }
+
+    const prevBtn = $('heroPrev');
+    const nextBtn = $('heroNext');
+    if (prevBtn) prevBtn.addEventListener('click', () => go(idx - 1));
+    if (nextBtn) nextBtn.addEventListener('click', () => go(idx + 1));
+
+    go(0);
+  }
 
   // Init live check
   checkLive();

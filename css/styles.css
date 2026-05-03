@@ -2690,6 +2690,151 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 }
 
 /* ============================================
+   Hero carrousel (slides)
+   ============================================ */
+.hero-track {
+  position: relative;
+  min-height: 460px;
+}
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+  pointer-events: none;
+}
+.hero-slide.is-active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+  position: relative;
+}
+.hero-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin: 22px auto 0;
+  padding: 8px 14px;
+  background: rgba(15, 9, 24, 0.55);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 999px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+  position: relative;
+  z-index: 3;
+}
+.hero-arrow {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  flex: 0 0 32px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.85);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.18s, color 0.18s, transform 0.12s;
+}
+.hero-arrow:hover {
+  background: rgba(255,255,255,0.14);
+  color: #fff;
+}
+.hero-arrow:active { transform: scale(0.9); }
+.hero-arrow:focus-visible {
+  outline: none;
+  background: rgba(255,255,255,0.18);
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.5);
+}
+.hero-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.hero-dot {
+  position: relative;
+}
+.hero-dot::after {
+  content: attr(data-name);
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: rgba(15, 9, 24, 0.95);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s, transform 0.15s;
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  z-index: 10;
+}
+.hero-dot:hover::after,
+.hero-dot:focus-visible::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.hero-dot {
+  width: 9px;
+  height: 9px;
+  min-width: 9px;
+  min-height: 9px;
+  flex: 0 0 9px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.4);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s, transform 0.2s;
+}
+.hero-dot:hover { background: rgba(255,255,255,0.7); }
+.hero-dot.is-active {
+  background: #fff;
+  transform: scale(1.35);
+}
+.btn-instagram {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  background: linear-gradient(135deg, #f58529 0%, #dd2a7b 50%, #8134af 100%);
+  color: #fff;
+  box-shadow: 0 6px 24px rgba(221, 42, 123, 0.45);
+  transition: transform 0.15s, box-shadow 0.25s;
+  border: none;
+  cursor: pointer;
+}
+.btn-instagram:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(221, 42, 123, 0.65);
+}
+@media (max-width: 600px) {
+  .hero-arrow { width: 36px; height: 36px; font-size: 1.3rem; }
+  .hero-arrow--prev { left: 6px; }
+  .hero-arrow--next { right: 6px; }
+}
+
+/* ============================================
    Aviso fotosensibilidad (modal)
    ============================================ */
 .photo-warn {

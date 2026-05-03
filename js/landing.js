@@ -130,6 +130,33 @@
     });
   }
 
+  // Aviso fotosensibilidad
+  function applyFlashPref(pref) {
+    const root = document.documentElement;
+    root.classList.remove('flash-off', 'flash-low', 'flash-full', 'flash-pending');
+    root.classList.add('flash-' + pref);
+    try { localStorage.setItem('flashPref', pref); } catch (e) {}
+  }
+  const photoWarn = $('photoWarn');
+  if (photoWarn) {
+    let stored = null;
+    try { stored = localStorage.getItem('flashPref'); } catch (e) {}
+    if (stored !== 'off' && stored !== 'low' && stored !== 'full') {
+      photoWarn.hidden = false;
+    }
+    photoWarn.querySelectorAll('[data-flash]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        applyFlashPref(btn.dataset.flash);
+        photoWarn.hidden = true;
+      });
+    });
+  }
+  // Trigger global para reabrir desde footer u otros lugares
+  window.openPhotoWarn = () => { if (photoWarn) photoWarn.hidden = false; };
+  document.querySelectorAll('[data-open-photo-warn]').forEach(el => {
+    el.addEventListener('click', e => { e.preventDefault(); window.openPhotoWarn(); });
+  });
+
   // Init live check
   checkLive();
   setInterval(checkLive, REFRESH_MS);

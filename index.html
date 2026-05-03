@@ -9,8 +9,39 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Bricolage+Grotesque:wght@700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<script>
+  (function () {
+    try {
+      var v = localStorage.getItem('flashPref');
+      if (v === 'off' || v === 'low' || v === 'full') {
+        document.documentElement.classList.add('flash-' + v);
+      } else {
+        document.documentElement.classList.add('flash-pending');
+      }
+    } catch (e) {}
+  })();
+</script>
 </head>
 <body class="landing-body">
+
+<!-- ===== Aviso fotosensibilidad ===== -->
+<div class="photo-warn" id="photoWarn" role="dialog" aria-modal="true" aria-labelledby="photoWarnTitle" hidden>
+  <div class="photo-warn-card">
+    <div class="photo-warn-icon">⚠️</div>
+    <h2 class="photo-warn-title" id="photoWarnTitle">Aviso de fotosensibilidad</h2>
+    <p class="photo-warn-text">
+      Esta página tiene efectos de luces estroboscópicas y colores parpadeando rápidamente.
+      Si tienes epilepsia fotosensible, migrañas o sensibilidad a luces intermitentes,
+      puede afectarte. ¿Cómo quieres verla?
+    </p>
+    <div class="photo-warn-actions">
+      <button type="button" class="pw-btn pw-btn--full" data-flash="full">Dame todo el flash</button>
+      <button type="button" class="pw-btn pw-btn--low"  data-flash="low">Baja intensidad</button>
+      <button type="button" class="pw-btn pw-btn--off"  data-flash="off">Soy fotosensible · desactivar</button>
+    </div>
+    <p class="photo-warn-foot">Puedes cambiar la elección luego desde el footer.</p>
+  </div>
+</div>
 
 <!-- ===== Navbar ===== -->
 <nav class="navbar-pp" id="navbar">
@@ -82,7 +113,7 @@
     </div>
 
     <h1 class="hero-name">
-      Paw<span class="hero-name-accent">Pau</span>
+      <span class="hero-name-accent">PawPau</span>
     </h1>
     <p class="hero-tagline">𝐄𝐥 𝐟𝐥𝐚𝐬𝐡 𝐰𝐚𝐫𝐧𝐢𝐧𝐠 𝐞𝐧 𝐦𝐢 𝐜𝐚𝐧𝐚𝐥 𝐞𝐬 𝐫𝐞𝐚𝐥</p>
 
@@ -244,6 +275,7 @@
     <div class="footer-paws">🐾 🐾 🐾</div>
     <p>Hecho con cariño para la comunidad de PawPau</p>
     <p class="muted">Status en vivo vía <a href="https://decapi.me" target="_blank" rel="noopener">decapi.me</a> · Avatar vía unavatar.io</p>
+    <p class="muted"><a href="#" data-open-photo-warn>⚠️ Ajustar efectos de luces</a></p>
   </footer>
 </div>
 

@@ -194,6 +194,139 @@
     go(0);
   }
 
+  // ===== Star Wars Day intro (4 de mayo) =====
+  // Audio: WebAudio synthesis (no external files)
+  let swAudioCtx = null;
+  let swMasterGain = null;
+  function getSwCtx() {
+    if (swAudioCtx) return swAudioCtx;
+    try {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (Ctx) {
+        swAudioCtx = new Ctx();
+        swMasterGain = swAudioCtx.createGain();
+        swMasterGain.gain.value = 0.55;
+        swMasterGain.connect(swAudioCtx.destination);
+      }
+    } catch (e) { swAudioCtx = null; }
+    return swAudioCtx;
+  }
+  function swMakeNoise(ctx, dur) {
+    const buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * dur), ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    return src;
+  }
+
+  // Ignition: short upward zap before hum
+  function swPlayIgnite(ctx, t0) {
+    const out = swMasterGain;
+    const osc = ctx.createOscillator();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(60, t0);
+    osc.frequency.exponentialRampToValueAtTime(180, t0 + 0.18);
+    const lp = ctx.createBiquadFilter();
+    lp.type = 'lowpass';
+    lp.frequency.setValueAtTime(400, t0);
+    lp.frequency.exponentialRampToValueAtTime(1400, t0 + 0.18);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0, t0);
+    g.gain.linearRampToValueAtTime(0.18, t0 + 0.04);
+    g.gain.linearRampToValueAtTime(0.0, t0 + 0.22);
+    osc.connect(lp); lp.connect(g); g.connect(out);
+    osc.start(t0); osc.stop(t0 + 0.25);
+  }
+
+  // Hum: 3 sawtooths + LFO wobble, lowpass
+  function swPlayHum(ctx, t0, dur) {
+    const out = swMasterGain;
+    const osc1 = ctx.createOscillator(); osc1.type = 'sawtooth'; osc1.frequency.value = 86;
+    const osc2 = ctx.createOscillator(); osc2.type = 'sawtooth'; osc2.frequency.value = 172;
+    const osc3 = ctx.createOscillator(); osc3.type = 'triangle'; osc3.frequency.value = 258;
+    const lfo = ctx.createOscillator(); lfo.frequency.value = 4.4;
+    const lfoG = ctx.createGain(); lfoG.gain.value = 2.6;
+    lfo.connect(lfoG); lfoG.connect(osc1.frequency); lfoG.connect(osc2.frequency);
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass'; filter.frequency.value = 1300; filter.Q.value = 1.4;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0, t0);
+    g.gain.linearRampToValueAtTime(0.085, t0 + 0.35);
+    g.gain.setValueAtTime(0.085, t0 + dur - 0.7);
+    g.gain.linearRampToValueAtTime(0, t0 + dur);
+    osc1.connect(filter); osc2.connect(filter); osc3.connect(filter);
+    filter.connect(g); g.connect(out);
+    osc1.start(t0); osc2.start(t0); osc3.start(t0); lfo.start(t0);
+    osc1.stop(t0 + dur); osc2.stop(t0 + dur); osc3.stop(t0 + dur); lfo.stop(t0 + dur);
+  }
+
+  function swPlaySequence() {
+    const ctx = getSwCtx();
+    if (!ctx) return;
+    if (ctx.state === 'suspended') { try { ctx.resume(); } catch (e) {} }
+    const t0 = ctx.currentTime + 0.02;
+    swPlayIgnite(ctx, t0 + 1.35);
+    swPlayHum(ctx, t0 + 1.45, 4.6);
+  }
+  function swStopAll() {
+    if (!swAudioCtx || !swMasterGain) return;
+    const now = swAudioCtx.currentTime;
+    try {
+      swMasterGain.gain.cancelScheduledValues(now);
+      swMasterGain.gain.setValueAtTime(swMasterGain.gain.value, now);
+      swMasterGain.gain.linearRampToValueAtTime(0, now + 0.2);
+      setTimeout(() => { swMasterGain.gain.value = 0.55; }, 250);
+    } catch (e) {}
+  }
+
+  function showSwIntro() {
+    if (document.documentElement.classList.contains('flash-off')) return;
+    const current = $('swIntro');
+    if (!current) return;
+    // Clone & replace to restart CSS animations cleanly
+    const fresh = current.cloneNode(true);
+    current.parentNode.replaceChild(fresh, current);
+    fresh.hidden = false;
+    swPlaySequence();
+    const skip = fresh.querySelector('#swSkip');
+    const close = () => { fresh.hidden = true; swStopAll(); };
+    if (skip) skip.addEventListener('click', close, { once: true });
+    setTimeout(close, 6200);
+  }
+  window.openSwIntro = showSwIntro;
+  document.querySelectorAll('[data-open-sw-intro]').forEach(el => {
+    el.addEventListener('click', e => { e.preventDefault(); showSwIntro(); });
+  });
+
+  function maybeShowSwIntro() {
+    const today = new Date();
+    if (today.getMonth() !== 4 || today.getDate() !== 4) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (document.documentElement.classList.contains('flash-off')) return;
+    try { if (sessionStorage.getItem('swDayShown') === '1') return; } catch (e) {}
+
+    function autoShow() {
+      if (document.documentElement.classList.contains('flash-off')) return;
+      try { sessionStorage.setItem('swDayShown', '1'); } catch (e) {}
+      showSwIntro();
+    }
+
+    const photoWarn = $('photoWarn');
+    if (photoWarn && !photoWarn.hidden) {
+      const obs = new MutationObserver(() => {
+        if (photoWarn.hidden) {
+          obs.disconnect();
+          autoShow();
+        }
+      });
+      obs.observe(photoWarn, { attributes: true, attributeFilter: ['hidden'] });
+    } else {
+      autoShow();
+    }
+  }
+  maybeShowSwIntro();
+
   // Init live check
   checkLive();
   setInterval(checkLive, REFRESH_MS);

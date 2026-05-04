@@ -2922,3 +2922,366 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   font-size: 0.78rem;
   color: var(--text-muted);
 }
+
+/* ===== Star Wars Day intro — Sith ignites red saber ===== */
+.sw-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: radial-gradient(ellipse at center, #0d0a14 0%, #000 75%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  opacity: 0;
+  overflow: hidden;
+  font-family: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
+  animation: sw-fade-in 0.6s ease forwards, sw-fade-out 0.8s ease 5.4s forwards;
+}
+.sw-intro[hidden] { display: none !important; }
+
+.sw-skip {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 3;
+  font-family: inherit;
+  transition: background 0.2s, transform 0.08s;
+}
+.sw-skip:hover { background: rgba(255, 255, 255, 0.14); transform: translateY(-1px); }
+
+.sw-stage {
+  position: relative;
+  width: 100%;
+  height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ignition glow — radial red light when blade activates */
+.sw-ignite-glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1px;
+  height: 1px;
+  background: #ff2020;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  box-shadow:
+    0 0 80px 50px rgba(255, 30, 30, 0.6),
+    0 0 180px 100px rgba(255, 30, 30, 0.35),
+    0 0 320px 180px rgba(180, 0, 0, 0.18);
+  animation: sw-ignite-glow-anim 4.5s ease-out 1.4s forwards;
+}
+
+/* Sith silhouette */
+.sw-sith {
+  position: relative;
+  width: 180px;
+  height: 320px;
+  opacity: 0;
+  transform: translateY(20px) scale(0.96);
+  animation: sw-sith-in 1.0s cubic-bezier(.2,.8,.2,1) 0.5s forwards;
+}
+.sw-sith-cape {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 200px;
+  height: 270px;
+  background: linear-gradient(180deg, transparent 0%, #050608 28%, #0a0c12 100%);
+  transform: translateX(-50%);
+  clip-path: polygon(30% 0, 70% 0, 100% 100%, 0 100%);
+  filter: blur(0.6px);
+}
+.sw-sith-body {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 130px;
+  height: 280px;
+  background: #02030a;
+  transform: translateX(-50%);
+  clip-path: polygon(28% 0, 72% 0, 90% 22%, 100% 100%, 0 100%, 10% 22%);
+  box-shadow: inset 4px 0 10px rgba(255, 255, 255, 0.04);
+}
+.sw-sith-hood {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 100px;
+  height: 110px;
+  background: #000;
+  transform: translateX(-50%);
+  border-radius: 50% 50% 28% 28% / 60% 60% 35% 35%;
+  box-shadow: inset 8px 6px 18px rgba(255, 255, 255, 0.05);
+}
+.sw-sith-hood::after {
+  content: '';
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  width: 50px;
+  height: 22px;
+  background: #000;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.8);
+}
+/* Glowing red sith eyes */
+.sw-sith-eyes {
+  position: absolute;
+  top: 56px;
+  left: 50%;
+  width: 50px;
+  height: 8px;
+  transform: translateX(-50%);
+  opacity: 0;
+  animation: sw-eyes-glow 4.0s ease-in 1.4s forwards;
+}
+.sw-sith-eyes::before,
+.sw-sith-eyes::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 9px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffd0d0;
+  box-shadow: 0 0 6px 2px #ff3030, 0 0 12px 4px rgba(255, 40, 40, 0.7);
+}
+.sw-sith-eyes::before { left: 4px; }
+.sw-sith-eyes::after  { right: 4px; }
+
+/* Arm reaching out + saber */
+.sw-sith-arm {
+  position: absolute;
+  top: 165px;
+  left: 50%;
+  width: 60px;
+  height: 14px;
+  background: #02030a;
+  transform: translateX(8px) rotate(-12deg);
+  transform-origin: 0% 50%;
+  border-radius: 4px;
+  z-index: 2;
+}
+.sw-sith-saber {
+  position: absolute;
+  top: 168px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  transform: translateX(60px) rotate(-12deg);
+  transform-origin: 0% 50%;
+  z-index: 3;
+  animation: sw-sith-pose 3.5s cubic-bezier(.4, 0, .3, 1) 2.0s forwards;
+}
+.sw-sith-hilt {
+  width: 56px;
+  height: 18px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #c8ccd2 0%, #8a8f97 35%, #2a2e34 65%, #6c7178 100%);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.7);
+  position: relative;
+  flex-shrink: 0;
+  z-index: 2;
+}
+.sw-sith-hilt::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  right: -3px;
+  width: 10px;
+  background: #14171c;
+  border-radius: 2px;
+}
+.sw-sith-blade {
+  width: 230px;
+  max-width: 38vw;
+  height: 11px;
+  border-radius: 6px;
+  background: #ffeaea;
+  box-shadow:
+    0 0 6px 1px #ffffff,
+    0 0 16px 4px #ff3030,
+    0 0 32px 10px rgba(255, 48, 48, 0.75),
+    0 0 60px 18px rgba(255, 48, 48, 0.4);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: sw-blade-ignite 0.55s cubic-bezier(.3, .8, .4, 1) 1.4s forwards;
+}
+
+.sw-text {
+  color: #ffe81f;
+  font-size: clamp(1.6rem, 5.5vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-align: center;
+  margin: 0;
+  padding: 0 16px;
+  opacity: 0;
+  text-shadow: 0 0 20px rgba(255, 232, 31, 0.55), 0 0 40px rgba(255, 232, 31, 0.25);
+  animation: sw-text-in 0.9s ease 3.4s forwards;
+}
+.sw-sub {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  margin: 0;
+  opacity: 0;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  animation: sw-text-in 0.9s ease 3.8s forwards;
+}
+
+@keyframes sw-fade-in { to { opacity: 1; } }
+@keyframes sw-fade-out { to { opacity: 0; visibility: hidden; } }
+@keyframes sw-sith-in {
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes sw-blade-ignite {
+  0%   { transform: scaleX(0); }
+  60%  { transform: scaleX(1.05); }
+  100% { transform: scaleX(1); }
+}
+@keyframes sw-ignite-glow-anim {
+  0%   { opacity: 0; }
+  6%   { opacity: 0.9; }
+  18%  { opacity: 0.55; }
+  100% { opacity: 0.45; }
+}
+@keyframes sw-eyes-glow {
+  0%   { opacity: 0; }
+  40%  { opacity: 1; }
+  100% { opacity: 1; }
+}
+/* After ignition, slight saber raise + arm motion (subtle threatening pose) */
+@keyframes sw-sith-pose {
+  0%   { transform: translateX(60px) rotate(-12deg); }
+  35%  { transform: translateX(60px) rotate(-32deg); }
+  70%  { transform: translateX(60px) rotate(-22deg); }
+  100% { transform: translateX(60px) rotate(-25deg); }
+}
+@keyframes sw-text-in { to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .sw-intro { display: none !important; }
+}
+html.flash-off .sw-intro { display: none !important; }
+@media (max-width: 480px) {
+  .sw-stage { height: 300px; }
+  .sw-sith { width: 150px; height: 270px; }
+  .sw-sith-cape { width: 170px; height: 230px; }
+  .sw-sith-body { width: 110px; height: 240px; }
+  .sw-sith-hood { width: 86px; height: 96px; }
+  .sw-sith-blade { width: 180px; }
+}
+
+/* ===== FAB Star Wars Day ===== */
+.fab-sw {
+  position: fixed;
+  bottom: 110px;
+  right: 24px;
+  width: 64px;
+  height: 64px;
+  min-width: auto;
+  flex: 0 0 auto;
+  padding: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #1a1f2e, #0a0d18 60%, #000);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  padding: 0;
+  border: 2px solid #ffe81f;
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 232, 31, 0.4),
+    0 0 18px rgba(255, 232, 31, 0.35),
+    inset 0 -3px 8px rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s;
+  font-family: inherit;
+}
+.fab-sw:hover {
+  transform: scale(1.1) rotate(-6deg);
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 232, 31, 0.6),
+    0 0 28px rgba(255, 232, 31, 0.6),
+    inset 0 -3px 8px rgba(0, 0, 0, 0.5);
+}
+.fab-sw:active { transform: scale(1.04) rotate(-2deg); }
+
+.fab-sw-deathstar {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 68% 58%, #d4d8e0 0%, #8a8f99 35%, #4a4e58 70%, #1a1d24 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.45),
+    inset -4px -5px 10px rgba(0, 0, 0, 0.55),
+    inset 3px 3px 6px rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+  animation: fabSwSpin 22s linear infinite;
+}
+.fab-sw-deathstar::before {
+  content: '';
+  position: absolute;
+  top: 22%;
+  left: 20%;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 62% 62%, #4a4e58 0%, #2a2d33 55%, #0a0c10 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.7);
+}
+.fab-sw-deathstar::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.55);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+@keyframes fabSwSpin {
+  to { transform: rotate(360deg); }
+}
+
+.fab-pulse-ring--sw {
+  border-color: rgba(255, 232, 31, 0.55);
+}
+
+.fab-tooltip--sw {
+  border-color: rgba(255, 232, 31, 0.5);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55), 0 0 16px rgba(255, 232, 31, 0.25);
+}
+.fab-tooltip--sw strong { color: #ffe81f; font-weight: 800; }
+.fab-sw:hover .fab-tooltip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+@media (max-width: 600px) {
+  .fab-sw { width: 54px; height: 54px; bottom: 90px; right: 16px; }
+  .fab-sw-deathstar { width: 32px; height: 32px; }
+  .fab-sw-deathstar::before { width: 9px; height: 9px; }
+}

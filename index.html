@@ -24,6 +24,27 @@
 </head>
 <body class="landing-body">
 
+<!-- ===== Star Wars Day intro (4 de mayo) ===== -->
+<div class="sw-intro" id="swIntro" role="dialog" aria-label="May the Force be with you" hidden>
+  <button type="button" class="sw-skip" id="swSkip" aria-label="Saltar intro">Saltar ✕</button>
+  <div class="sw-stage" aria-hidden="true">
+    <div class="sw-sith">
+      <span class="sw-sith-cape"></span>
+      <span class="sw-sith-body"></span>
+      <span class="sw-sith-hood"></span>
+      <span class="sw-sith-eyes"></span>
+      <span class="sw-sith-arm"></span>
+      <div class="sw-sith-saber">
+        <span class="sw-sith-hilt"></span>
+        <span class="sw-sith-blade"></span>
+      </div>
+    </div>
+    <div class="sw-ignite-glow"></div>
+  </div>
+  <h2 class="sw-text">May the Force be with you</h2>
+  <p class="sw-sub">★ 4 de mayo · Día de Star Wars ★</p>
+</div>
+
 <!-- ===== Aviso fotosensibilidad ===== -->
 <div class="photo-warn" id="photoWarn" role="dialog" aria-modal="true" aria-labelledby="photoWarnTitle" hidden>
   <div class="photo-warn-card">
@@ -424,6 +445,13 @@
   <span class="fab-tooltip">Soy parte del Team de los mejores periféricos !</span>
   <span class="fab-pulse-ring"></span>
 </a>
+
+<!-- FAB Star Wars Day -->
+<button type="button" class="fab-sw" id="fabSw" data-open-sw-intro aria-label="May the 4th — ver intro de Star Wars">
+  <span class="fab-sw-deathstar" aria-hidden="true"></span>
+  <span class="fab-tooltip fab-tooltip--sw">May the <strong>4th</strong> · ver intro</span>
+  <span class="fab-pulse-ring fab-pulse-ring--sw"></span>
+</button>
 
 <script src="js/landing.js"></script>
 </body>

@@ -3068,7 +3068,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 /* Arm reaching out + saber */
 .sw-sith-arm {
   position: absolute;
-  top: 165px;
+  top: 51%;
   left: 50%;
   width: 60px;
   height: 14px;
@@ -3079,12 +3079,13 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   z-index: 2;
 }
 .sw-sith-saber {
+  --sx: 60px;
   position: absolute;
-  top: 168px;
+  top: 52%;
   left: 50%;
   display: flex;
   align-items: center;
-  transform: translateX(60px) rotate(-12deg);
+  transform: translateX(var(--sx)) rotate(-12deg);
   transform-origin: 0% 50%;
   z-index: 3;
   animation: sw-sith-pose 3.5s cubic-bezier(.4, 0, .3, 1) 2.0s forwards;
@@ -3170,16 +3171,13 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 }
 /* After ignition, slight saber raise + arm motion (subtle threatening pose) */
 @keyframes sw-sith-pose {
-  0%   { transform: translateX(60px) rotate(-12deg); }
-  35%  { transform: translateX(60px) rotate(-32deg); }
-  70%  { transform: translateX(60px) rotate(-22deg); }
-  100% { transform: translateX(60px) rotate(-25deg); }
+  0%   { transform: translateX(var(--sx)) rotate(-12deg); }
+  35%  { transform: translateX(var(--sx)) rotate(-32deg); }
+  70%  { transform: translateX(var(--sx)) rotate(-22deg); }
+  100% { transform: translateX(var(--sx)) rotate(-25deg); }
 }
 @keyframes sw-text-in { to { opacity: 1; } }
 
-@media (prefers-reduced-motion: reduce) {
-  .sw-intro { display: none !important; }
-}
 html.flash-off .sw-intro { display: none !important; }
 @media (max-width: 480px) {
   .sw-stage { height: 300px; }
@@ -3187,7 +3185,11 @@ html.flash-off .sw-intro { display: none !important; }
   .sw-sith-cape { width: 170px; height: 230px; }
   .sw-sith-body { width: 110px; height: 240px; }
   .sw-sith-hood { width: 86px; height: 96px; }
-  .sw-sith-blade { width: 180px; }
+  .sw-sith-arm { width: 50px; height: 12px; }
+  .sw-sith-saber { --sx: 50px; }
+  .sw-sith-hilt { width: 48px; height: 16px; }
+  .sw-sith-blade { width: 160px; height: 9px; }
+  .sw-sith-eyes { top: 48px; width: 44px; height: 7px; }
 }
 
 /* ===== FAB Star Wars Day ===== */

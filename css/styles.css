@@ -3178,7 +3178,6 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 }
 @keyframes sw-text-in { to { opacity: 1; } }
 
-html.flash-off .sw-intro { display: none !important; }
 @media (max-width: 480px) {
   .sw-stage { height: 300px; }
   .sw-sith { width: 150px; height: 270px; }

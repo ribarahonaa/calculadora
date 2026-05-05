@@ -281,7 +281,6 @@
   }
 
   function showSwIntro() {
-    if (document.documentElement.classList.contains('flash-off')) return;
     const current = $('swIntro');
     if (!current) return;
     // Clone & replace to restart CSS animations cleanly
@@ -303,11 +302,9 @@
     const today = new Date();
     if (today.getMonth() !== 4 || today.getDate() !== 4) return;
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (document.documentElement.classList.contains('flash-off')) return;
     try { if (sessionStorage.getItem('swDayShown') === '1') return; } catch (e) {}
 
     function autoShow() {
-      if (document.documentElement.classList.contains('flash-off')) return;
       try { sessionStorage.setItem('swDayShown', '1'); } catch (e) {}
       showSwIntro();
     }

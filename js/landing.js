@@ -3,6 +3,9 @@
   const CHANNEL = 'pawpau';
   const REFRESH_MS = 60_000;
 
+  // Star Wars Day feature flag. Set false to hide intro, FAB, and disable all triggers.
+  const SW_DAY_ENABLED = true;
+
   const $ = id => document.getElementById(id);
 
   function setText(el, t) { if (el) el.textContent = t; }
@@ -281,6 +284,7 @@
   }
 
   function showSwIntro() {
+    if (!SW_DAY_ENABLED) return;
     const current = $('swIntro');
     if (!current) return;
     // Clone & replace to restart CSS animations cleanly
@@ -293,23 +297,21 @@
     if (skip) skip.addEventListener('click', close, { once: true });
     setTimeout(close, 6200);
   }
-  window.openSwIntro = showSwIntro;
-  document.querySelectorAll('[data-open-sw-intro]').forEach(el => {
-    el.addEventListener('click', e => { e.preventDefault(); showSwIntro(); });
-  });
+  if (SW_DAY_ENABLED) {
+    window.openSwIntro = showSwIntro;
+    document.querySelectorAll('[data-open-sw-intro]').forEach(el => {
+      el.addEventListener('click', e => { e.preventDefault(); showSwIntro(); });
+    });
+  } else {
+    document.querySelectorAll('#fabSw, #swIntro, [data-open-sw-intro]').forEach(el => el.remove());
+  }
 
   function maybeShowSwIntro() {
-    const today = new Date();
-    if (today.getMonth() !== 4 || today.getDate() !== 4) return;
+    if (!SW_DAY_ENABLED) return;
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     try { if (sessionStorage.getItem('swDayShown') === '1') return; } catch (e) {}
-
-    function autoShow() {
-      try { sessionStorage.setItem('swDayShown', '1'); } catch (e) {}
-      showSwIntro();
-    }
-
-    autoShow();
+    try { sessionStorage.setItem('swDayShown', '1'); } catch (e) {}
+    showSwIntro();
   }
   maybeShowSwIntro();
 

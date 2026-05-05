@@ -330,9 +330,13 @@
   function maybeShowSwIntro() {
     if (!SW_DAY_ENABLED) return;
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    try { if (sessionStorage.getItem('swDayShown') === '1') return; } catch (e) {}
-    try { sessionStorage.setItem('swDayShown', '1'); } catch (e) {}
-    showSwIntro();
+    // Fires on first user gesture each page load. After that, FAB triggers manually.
+    const events = ['pointerdown', 'keydown', 'touchstart'];
+    const trigger = () => {
+      events.forEach(ev => document.removeEventListener(ev, trigger, true));
+      showSwIntro();
+    };
+    events.forEach(ev => document.addEventListener(ev, trigger, { once: true, capture: true }));
   }
   maybeShowSwIntro();
 

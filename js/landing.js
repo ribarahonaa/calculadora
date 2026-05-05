@@ -317,6 +317,8 @@
     if (!current) return;
     // Clone & replace to restart CSS animations cleanly
     const fresh = current.cloneNode(true);
+    fresh.classList.remove('sw-intro--sith', 'sw-intro--jedi');
+    fresh.classList.add(Math.random() < 0.5 ? 'sw-intro--jedi' : 'sw-intro--sith');
     current.parentNode.replaceChild(fresh, current);
     fresh.hidden = false;
     swPlaySequence();

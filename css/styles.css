@@ -2994,101 +2994,69 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 }
 
 /* Sith silhouette */
+/* ===== Pixel-art shared ===== */
+.sw-sprite {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.5));
+}
+
 .sw-sith {
   position: relative;
   width: 180px;
-  height: 320px;
+  height: 270px;
   opacity: 0;
   transform: translateY(20px) scale(0.96);
   animation: sw-sith-in 1.0s cubic-bezier(.2,.8,.2,1) 0.5s forwards;
 }
-.sw-sith-cape {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 200px;
-  height: 270px;
-  background: linear-gradient(180deg, transparent 0%, #050608 28%, #0a0c12 100%);
-  transform: translateX(-50%);
-  clip-path: polygon(30% 0, 70% 0, 100% 100%, 0 100%);
-  filter: blur(0.6px);
-}
-.sw-sith-body {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 130px;
-  height: 280px;
-  background: #02030a;
-  transform: translateX(-50%);
-  clip-path: polygon(28% 0, 72% 0, 90% 22%, 100% 100%, 0 100%, 10% 22%);
-  box-shadow: inset 4px 0 10px rgba(255, 255, 255, 0.04);
-}
-.sw-sith-hood {
-  position: absolute;
-  top: 6px;
-  left: 50%;
-  width: 100px;
-  height: 110px;
-  background: #000;
-  transform: translateX(-50%);
-  border-radius: 50% 50% 28% 28% / 60% 60% 35% 35%;
-  box-shadow: inset 8px 6px 18px rgba(255, 255, 255, 0.05);
-}
-.sw-sith-hood::after {
-  content: '';
-  position: absolute;
-  top: 42%;
-  left: 50%;
-  width: 50px;
-  height: 22px;
-  background: #000;
-  transform: translateX(-50%);
-  border-radius: 50%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.8);
-}
-/* Glowing red sith eyes */
+/* Glowing red sith eyes — pixel blocks overlaid on sprite */
 .sw-sith-eyes {
   position: absolute;
-  top: 56px;
+  top: 24%;
   left: 50%;
-  width: 50px;
-  height: 8px;
+  width: 38%;
+  height: 4%;
   transform: translateX(-50%);
   opacity: 0;
   animation: sw-eyes-glow 4.0s ease-in 1.4s forwards;
+  z-index: 4;
 }
 .sw-sith-eyes::before,
 .sw-sith-eyes::after {
   content: '';
   position: absolute;
   top: 0;
-  width: 9px;
-  height: 5px;
-  border-radius: 50%;
-  background: #ffd0d0;
-  box-shadow: 0 0 6px 2px #ff3030, 0 0 12px 4px rgba(255, 40, 40, 0.7);
+  width: 22%;
+  height: 100%;
+  background: #ff2020;
+  box-shadow:
+    0 0 0 2px rgba(255, 50, 50, 0.6),
+    0 0 0 5px rgba(255, 50, 50, 0.25);
 }
-.sw-sith-eyes::before { left: 4px; }
-.sw-sith-eyes::after  { right: 4px; }
+.sw-sith-eyes::before { left: 14%; }
+.sw-sith-eyes::after  { right: 14%; }
 
-/* Arm reaching out + saber */
+/* Arm reaching out + saber — pixel-art (no border-radius) */
 .sw-sith-arm {
   position: absolute;
-  top: 51%;
+  top: 50%;
   left: 50%;
   width: 60px;
-  height: 14px;
-  background: #02030a;
-  transform: translateX(8px) rotate(-12deg);
+  height: 12px;
+  background: #22252e;
+  transform: translateX(6px) rotate(-12deg);
   transform-origin: 0% 50%;
-  border-radius: 4px;
   z-index: 2;
+  box-shadow: 0 4px 0 #14171e;
 }
 .sw-sith-saber {
   --sx: 60px;
   position: absolute;
-  top: 52%;
+  top: 51%;
   left: 50%;
   display: flex;
   align-items: center;
@@ -3098,36 +3066,42 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   animation: sw-sith-pose 3.5s cubic-bezier(.4, 0, .3, 1) 2.0s forwards;
 }
 .sw-sith-hilt {
-  width: 56px;
-  height: 18px;
-  border-radius: 3px;
-  background: linear-gradient(180deg, #c8ccd2 0%, #8a8f97 35%, #2a2e34 65%, #6c7178 100%);
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.7);
+  width: 48px;
+  height: 16px;
+  background:
+    linear-gradient(180deg,
+      #c8ccd2 0%, #c8ccd2 25%,
+      #8a8f97 25%, #8a8f97 50%,
+      #4a4e54 50%, #4a4e54 75%,
+      #2a2e34 75%, #2a2e34 100%);
   position: relative;
   flex-shrink: 0;
   z-index: 2;
+  box-shadow: 0 0 0 2px #000;
 }
 .sw-sith-hilt::after {
   content: '';
   position: absolute;
-  top: -3px;
-  bottom: -3px;
-  right: -3px;
-  width: 10px;
+  top: -2px;
+  bottom: -2px;
+  right: -8px;
+  width: 8px;
   background: #14171c;
-  border-radius: 2px;
+  box-shadow: 0 0 0 2px #000;
 }
 .sw-sith-blade {
-  width: 230px;
+  width: 220px;
   max-width: 38vw;
-  height: 11px;
-  border-radius: 6px;
-  background: #ffeaea;
+  height: 12px;
+  background: #fff;
+  position: relative;
   box-shadow:
-    0 0 6px 1px #ffffff,
-    0 0 16px 4px #ff3030,
-    0 0 32px 10px rgba(255, 48, 48, 0.75),
-    0 0 60px 18px rgba(255, 48, 48, 0.4);
+    0 -4px 0 0 #ff3030,
+    0 4px 0 0 #ff3030,
+    0 -8px 0 0 rgba(255, 48, 48, 0.55),
+    0 8px 0 0 rgba(255, 48, 48, 0.55),
+    0 -14px 0 0 rgba(255, 48, 48, 0.25),
+    0 14px 0 0 rgba(255, 48, 48, 0.25);
   transform: scaleX(0);
   transform-origin: left center;
   animation: sw-blade-ignite 0.55s cubic-bezier(.3, .8, .4, 1) 1.4s forwards;
@@ -3186,16 +3160,124 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 @keyframes sw-text-in { to { opacity: 1; } }
 
 @media (max-width: 480px) {
-  .sw-stage { height: 300px; }
-  .sw-sith { width: 150px; height: 270px; }
-  .sw-sith-cape { width: 170px; height: 230px; }
-  .sw-sith-body { width: 110px; height: 240px; }
-  .sw-sith-hood { width: 86px; height: 96px; }
-  .sw-sith-arm { width: 50px; height: 12px; }
-  .sw-sith-saber { --sx: 50px; }
-  .sw-sith-hilt { width: 48px; height: 16px; }
-  .sw-sith-blade { width: 160px; height: 9px; }
-  .sw-sith-eyes { top: 48px; width: 44px; height: 7px; }
+  .sw-stage { height: 280px; }
+  .sw-sith { width: 140px; height: 220px; }
+  .sw-sith-arm { width: 46px; height: 10px; }
+  .sw-sith-saber { --sx: 46px; }
+  .sw-sith-hilt { width: 38px; height: 13px; }
+  .sw-sith-blade { width: 150px; height: 10px; }
+}
+
+/* ===== Jedi (Yoda) variant ===== */
+/* Show one variant at a time. Default = sith. */
+.sw-intro .sw-jedi { display: none; }
+.sw-intro--jedi .sw-sith { display: none; }
+.sw-intro--jedi .sw-jedi { display: block; }
+
+/* Recolor ignition glow for jedi (green) */
+.sw-intro--jedi .sw-ignite-glow {
+  background: #5cff7a;
+  box-shadow:
+    0 0 80px 50px rgba(60, 255, 110, 0.55),
+    0 0 180px 100px rgba(60, 255, 110, 0.32),
+    0 0 320px 180px rgba(0, 180, 60, 0.18);
+}
+/* Recolor headline for jedi (light green) */
+.sw-intro--jedi .sw-text {
+  color: #c9ffb8;
+  text-shadow: 0 0 20px rgba(120, 255, 140, 0.55), 0 0 40px rgba(120, 255, 140, 0.25);
+}
+
+.sw-jedi {
+  position: relative;
+  width: 220px;
+  height: 280px;
+  opacity: 0;
+  transform: translateY(20px) scale(0.96);
+  animation: sw-sith-in 1.0s cubic-bezier(.2,.8,.2,1) 0.5s forwards;
+}
+/* Eye blink overlay (kept blank — eyes baked into sprite) */
+.sw-jedi-eyes { display: none; }
+
+.sw-jedi-arm {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  width: 48px;
+  height: 12px;
+  background: #4a3a24;
+  transform: translateX(6px) rotate(-25deg);
+  transform-origin: 0% 50%;
+  z-index: 2;
+  box-shadow: 0 4px 0 #2d2418;
+}
+.sw-jedi-saber {
+  --jx: 48px;
+  position: absolute;
+  top: 61%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  transform: translateX(var(--jx)) rotate(-25deg);
+  transform-origin: 0% 50%;
+  z-index: 3;
+  animation: sw-jedi-pose 3.5s cubic-bezier(.4, 0, .3, 1) 2.0s forwards;
+}
+.sw-jedi-hilt {
+  width: 40px;
+  height: 14px;
+  background:
+    linear-gradient(180deg,
+      #c8ccd2 0%, #c8ccd2 25%,
+      #8a8f97 25%, #8a8f97 50%,
+      #4a4e54 50%, #4a4e54 75%,
+      #2a2e34 75%, #2a2e34 100%);
+  position: relative;
+  flex-shrink: 0;
+  z-index: 2;
+  box-shadow: 0 0 0 2px #000;
+}
+.sw-jedi-hilt::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  right: -8px;
+  width: 8px;
+  background: #14171c;
+  box-shadow: 0 0 0 2px #000;
+}
+.sw-jedi-blade {
+  width: 170px;
+  max-width: 30vw;
+  height: 10px;
+  background: #fff;
+  position: relative;
+  box-shadow:
+    0 -4px 0 0 #5cff7a,
+    0 4px 0 0 #5cff7a,
+    0 -8px 0 0 rgba(92, 255, 122, 0.55),
+    0 8px 0 0 rgba(92, 255, 122, 0.55),
+    0 -14px 0 0 rgba(92, 255, 122, 0.25),
+    0 14px 0 0 rgba(92, 255, 122, 0.25);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: sw-blade-ignite 0.55s cubic-bezier(.3, .8, .4, 1) 1.4s forwards;
+}
+
+@keyframes sw-jedi-pose {
+  0%   { transform: translateX(var(--jx)) rotate(-25deg); }
+  35%  { transform: translateX(var(--jx)) rotate(-50deg); }
+  70%  { transform: translateX(var(--jx)) rotate(-35deg); }
+  100% { transform: translateX(var(--jx)) rotate(-40deg); }
+}
+
+@media (max-width: 480px) {
+  .sw-jedi { width: 150px; height: 200px; }
+  .sw-jedi-arm { width: 40px; height: 10px; }
+  .sw-jedi-saber { --jx: 40px; }
+  .sw-jedi-hilt { width: 32px; height: 12px; }
+  .sw-jedi-blade { width: 130px; height: 8px; }
 }
 
 /* ===== FAB Star Wars Day ===== */

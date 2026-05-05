@@ -267,20 +267,41 @@
   function swPlaySequence() {
     const ctx = getSwCtx();
     if (!ctx) return;
-    if (ctx.state === 'suspended') { try { ctx.resume(); } catch (e) {} }
-    const t0 = ctx.currentTime + 0.02;
-    swPlayIgnite(ctx, t0 + 1.35);
-    swPlayHum(ctx, t0 + 1.45, 4.6);
+    const playNow = () => {
+      const t0 = ctx.currentTime + 0.02;
+      swPlayIgnite(ctx, t0 + 1.35);
+      swPlayHum(ctx, t0 + 1.45, 4.6);
+    };
+    const tryResume = () => {
+      try {
+        const p = ctx.resume();
+        if (p && p.then) p.then(() => { if (ctx.state === 'running') playNow(); }).catch(() => {});
+        else if (ctx.state === 'running') playNow();
+      } catch (e) {}
+    };
+    if (ctx.state === 'running') {
+      playNow();
+    } else {
+      tryResume();
+      // Browser autoplay policy fallback: replay on first user gesture if intro still visible.
+      const events = ['pointerdown', 'keydown', 'touchstart'];
+      const onGesture = () => {
+        events.forEach(ev => document.removeEventListener(ev, onGesture, true));
+        const intro = $('swIntro');
+        if (!intro || intro.hidden) return;
+        if (!swAudioCtx) return;
+        try {
+          swAudioCtx.resume().then(() => { if (swAudioCtx.state === 'running') playNow(); }).catch(() => {});
+        } catch (e) {}
+      };
+      events.forEach(ev => document.addEventListener(ev, onGesture, { once: true, capture: true }));
+    }
   }
   function swStopAll() {
-    if (!swAudioCtx || !swMasterGain) return;
-    const now = swAudioCtx.currentTime;
-    try {
-      swMasterGain.gain.cancelScheduledValues(now);
-      swMasterGain.gain.setValueAtTime(swMasterGain.gain.value, now);
-      swMasterGain.gain.linearRampToValueAtTime(0, now + 0.2);
-      setTimeout(() => { swMasterGain.gain.value = 0.55; }, 250);
-    } catch (e) {}
+    if (!swAudioCtx) return;
+    try { swAudioCtx.close(); } catch (e) {}
+    swAudioCtx = null;
+    swMasterGain = null;
   }
 
   function showSwIntro() {

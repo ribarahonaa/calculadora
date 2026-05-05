@@ -312,18 +312,7 @@
       showSwIntro();
     }
 
-    const photoWarn = $('photoWarn');
-    if (photoWarn && !photoWarn.hidden) {
-      const obs = new MutationObserver(() => {
-        if (photoWarn.hidden) {
-          obs.disconnect();
-          autoShow();
-        }
-      });
-      obs.observe(photoWarn, { attributes: true, attributeFilter: ['hidden'] });
-    } else {
-      autoShow();
-    }
+    autoShow();
   }
   maybeShowSwIntro();
 

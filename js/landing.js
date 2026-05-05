@@ -164,39 +164,44 @@
     el.addEventListener('click', e => { e.preventDefault(); window.openPhotoWarn(); });
   });
 
-  // Hero carrousel (manual)
+  // Hero carousel (Swiper)
   const heroTrack = $('heroTrack');
-  const heroDots = $('heroDots');
-  if (heroTrack && heroDots) {
-    const slides = Array.from(heroTrack.querySelectorAll('.hero-slide'));
-    let idx = 0;
-
-    slides.forEach((slide, i) => {
+  if (heroTrack && window.Swiper) {
+    const names = Array.from(heroTrack.querySelectorAll('.hero-slide')).map((slide, i) => {
       const nameEl = slide.querySelector('.hero-name');
-      const name = nameEl ? nameEl.textContent.trim() : `Slide ${i + 1}`;
-      const dot = document.createElement('button');
-      dot.type = 'button';
-      dot.className = 'hero-dot';
-      dot.setAttribute('role', 'tab');
-      dot.setAttribute('aria-label', name);
-      dot.setAttribute('data-name', name);
-      dot.addEventListener('click', () => go(i));
-      heroDots.appendChild(dot);
+      return nameEl ? nameEl.textContent.trim() : `Slide ${i + 1}`;
     });
-    const dots = Array.from(heroDots.children);
-
-    function go(i) {
-      idx = (i + slides.length) % slides.length;
-      slides.forEach((s, k) => s.classList.toggle('is-active', k === idx));
-      dots.forEach((d, k) => d.classList.toggle('is-active', k === idx));
-    }
-
-    const prevBtn = $('heroPrev');
-    const nextBtn = $('heroNext');
-    if (prevBtn) prevBtn.addEventListener('click', () => go(idx - 1));
-    if (nextBtn) nextBtn.addEventListener('click', () => go(idx + 1));
-
-    go(0);
+    new Swiper(heroTrack, {
+      effect: 'fade',
+      fadeEffect: { crossFade: true },
+      loop: true,
+      speed: 550,
+      autoplay: { delay: 5500, disableOnInteraction: false, pauseOnMouseEnter: true },
+      keyboard: { enabled: true },
+      a11y: true,
+      navigation: { prevEl: '#heroPrev', nextEl: '#heroNext' },
+      pagination: {
+        el: '#heroDots',
+        clickable: true,
+        bulletClass: 'hero-dot',
+        bulletActiveClass: 'is-active',
+        renderBullet: (i, className) =>
+          `<button type="button" class="${className}" role="tab" aria-label="${names[i]}" data-name="${names[i]}"></button>`,
+      },
+      on: {
+        autoplayTimeLeft(s, time, progress) {
+          const bullets = s.pagination && s.pagination.bullets;
+          if (!bullets) return;
+          const active = bullets[s.realIndex];
+          if (active) active.style.setProperty('--progress', 1 - progress);
+        },
+        slideChange(s) {
+          const bullets = s.pagination && s.pagination.bullets;
+          if (!bullets) return;
+          bullets.forEach(b => b.style.setProperty('--progress', 0));
+        },
+      },
+    });
   }
 
   // ===== Star Wars Day intro (4 de mayo) =====
@@ -334,11 +339,16 @@
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     // Fires on first user gesture each page load. After that, FAB triggers manually.
     const events = ['pointerdown', 'keydown', 'touchstart'];
-    const trigger = () => {
-      events.forEach(ev => document.removeEventListener(ev, trigger, true));
+    const trigger = (ev) => {
+      // Don't hijack interactions with photo-warn controls or the FAB itself.
+      const t = ev && ev.target;
+      if (t && t.closest && t.closest('[data-open-photo-warn], #photoWarn, .fab-sw, [data-open-sw-intro]')) {
+        return;
+      }
+      events.forEach(e => document.removeEventListener(e, trigger, true));
       showSwIntro();
     };
-    events.forEach(ev => document.addEventListener(ev, trigger, { once: true, capture: true }));
+    events.forEach(ev => document.addEventListener(ev, trigger, true));
   }
   maybeShowSwIntro();
 

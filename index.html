@@ -30,11 +30,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Bricolage+Grotesque:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <link rel="stylesheet" href="css/styles.css">
 <script>
   (function () {
     try {
-      var v = localStorage.getItem('flashPref');
+      localStorage.removeItem('flashPref');
+      var v = localStorage.getItem('flashPref_v2');
       if (v === 'off' || v === 'low' || v === 'full') {
         document.documentElement.classList.add('flash-' + v);
       } else {
@@ -82,7 +84,6 @@
       <button type="button" class="pw-btn pw-btn--low"  data-flash="low">Baja intensidad</button>
       <button type="button" class="pw-btn pw-btn--off"  data-flash="off">Soy fotosensible · desactivar</button>
     </div>
-    <p class="photo-warn-foot">Puedes cambiar la elección luego desde el footer.</p>
   </div>
 </div>
 
@@ -150,10 +151,11 @@
       </svg>
       <span>Efectos</span>
     </button>
-    <div class="hero-track" id="heroTrack">
+    <div class="hero-track swiper" id="heroTrack">
+      <div class="swiper-wrapper">
 
       <!-- Slide PawPau -->
-      <div class="hero-slide is-active" data-handle="pawpau">
+      <div class="hero-slide swiper-slide" data-handle="pawpau">
         <div class="hero-avatar-wrap">
           <span class="avatar-ring"></span>
           <span class="avatar-glow"></span>
@@ -194,7 +196,7 @@
       </div>
 
       <!-- Slide Mañitas -->
-      <div class="hero-slide" data-handle="manitasconenie">
+      <div class="hero-slide swiper-slide" data-handle="manitasconenie">
         <div class="hero-avatar-wrap">
           <span class="avatar-ring"></span>
           <span class="avatar-glow"></span>
@@ -223,7 +225,7 @@
       </div>
 
       <!-- Slide Mikel -->
-      <div class="hero-slide" data-handle="mikel_en_off">
+      <div class="hero-slide swiper-slide" data-handle="mikel_en_off">
         <div class="hero-avatar-wrap">
           <span class="avatar-ring"></span>
           <span class="avatar-glow"></span>
@@ -252,7 +254,7 @@
       </div>
 
       <!-- Slide Chimuelo -->
-      <div class="hero-slide" data-handle="chimuelo_vampire">
+      <div class="hero-slide swiper-slide" data-handle="chimuelo_vampire">
         <div class="hero-avatar-wrap">
           <span class="avatar-ring"></span>
           <span class="avatar-glow"></span>
@@ -280,6 +282,7 @@
         </div>
       </div>
 
+      </div><!-- /swiper-wrapper -->
     </div>
 
     <div class="hero-controls">
@@ -288,7 +291,7 @@
           <polyline points="15 6 9 12 15 18"/>
         </svg>
       </button>
-      <div class="hero-dots" id="heroDots" role="tablist"></div>
+      <div class="hero-dots swiper-pagination" id="heroDots"></div>
       <button type="button" class="hero-arrow" id="heroNext" aria-label="Siguiente">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <polyline points="9 6 15 12 9 18"/>
@@ -476,6 +479,7 @@
   <span class="fab-pulse-ring fab-pulse-ring--sw"></span>
 </button>
 
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="js/landing.js"></script>
 </body>
 </html>

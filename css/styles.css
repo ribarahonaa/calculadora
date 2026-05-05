@@ -1461,8 +1461,10 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   z-index: 5;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 8px 12px;
+  padding: 8px 12px 8px 10px;
+  width: max-content;
   border-radius: 999px;
   border: 1px solid rgba(255,255,255,0.5);
   background: rgba(0,0,0,0.6);
@@ -1471,7 +1473,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   font-family: inherit;
   font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
   line-height: 1;
   cursor: pointer;
   transition: transform 0.15s, background 0.2s, border-color 0.2s;
@@ -2696,23 +2698,26 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 .hero-track {
   position: relative;
   min-height: 460px;
+  width: 100%;
+  overflow: visible;
+  padding-top: 24px;
 }
+.hero-track .swiper-wrapper { overflow: visible; }
 .hero-slide {
-  position: absolute;
-  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  opacity: 0;
-  transform: translateX(40px);
-  transition: opacity 0.55s ease, transform 0.55s ease;
-  pointer-events: none;
+  height: auto;
+  box-sizing: border-box;
 }
-.hero-slide.is-active {
-  opacity: 1;
-  transform: translateX(0);
-  pointer-events: auto;
+/* Swiper pagination overrides: keep dots in our hero-controls bar */
+.hero-controls .swiper-pagination {
   position: relative;
+  inset: auto;
+  width: auto;
+  bottom: auto;
+  left: auto;
+  transform: none;
 }
 .hero-controls {
   display: inline-flex;
@@ -2806,8 +2811,10 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 }
 .hero-dot:hover { background: rgba(255,255,255,0.7); }
 .hero-dot.is-active {
-  background: #fff;
-  transform: scale(1.35);
+  background:
+    conic-gradient(from -90deg, #fff calc(var(--progress, 0) * 360deg), rgba(255,255,255,0.35) 0);
+  transform: scale(1.6);
+  transition: transform 0.2s, background 0.08s linear;
 }
 .btn-instagram {
   display: inline-flex;

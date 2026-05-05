@@ -135,17 +135,19 @@
     });
   }
 
-  // Aviso fotosensibilidad
+  // Aviso fotosensibilidad. Bump key version to force-reshow modal for existing users.
+  const FLASH_PREF_KEY = 'flashPref_v2';
+  try { localStorage.removeItem('flashPref'); } catch (e) {}
   function applyFlashPref(pref) {
     const root = document.documentElement;
     root.classList.remove('flash-off', 'flash-low', 'flash-full', 'flash-pending');
     root.classList.add('flash-' + pref);
-    try { localStorage.setItem('flashPref', pref); } catch (e) {}
+    try { localStorage.setItem(FLASH_PREF_KEY, pref); } catch (e) {}
   }
   const photoWarn = $('photoWarn');
   if (photoWarn) {
     let stored = null;
-    try { stored = localStorage.getItem('flashPref'); } catch (e) {}
+    try { stored = localStorage.getItem(FLASH_PREF_KEY); } catch (e) {}
     if (stored !== 'off' && stored !== 'low' && stored !== 'full') {
       photoWarn.hidden = false;
     }

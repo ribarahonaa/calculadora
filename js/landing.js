@@ -16,13 +16,17 @@
     document.querySelectorAll('.live-badge').forEach(fn);
   }
 
+  function eachLiveInfo(fn) {
+    document.querySelectorAll('.live-info').forEach(fn);
+  }
+
   function setOffline() {
     eachBadge(b => {
       b.classList.remove('is-live');
       const lbl = b.querySelector('.live-label');
       if (lbl) lbl.textContent = 'Offline';
     });
-    setDisplay($('liveInfo'), 'none');
+    eachLiveInfo(box => { box.style.display = 'none'; });
     document.querySelectorAll('.cta-label').forEach(el => el.textContent = 'Ver canal');
     toggleClass($('navLiveDot'), 'is-live', false);
   }
@@ -33,10 +37,15 @@
       const lbl = b.querySelector('.live-label');
       if (lbl) lbl.textContent = `EN VIVO · ${uptimeText}`;
     });
-    setDisplay($('liveInfo'), 'block');
-    setText($('liveTitle'), title || 'Transmisión en curso');
-    setText($('liveGame'), game || '—');
-    setText($('liveViewers'), viewers ? `👁 ${viewers} viendo` : '👁 viewers');
+    const titleText = title || 'Transmisión en curso';
+    const gameText = game || '—';
+    const viewersText = viewers ? `👁 ${viewers} viendo` : '👁 viewers';
+    eachLiveInfo(box => {
+      box.style.display = 'block';
+      setText(box.querySelector('.live-info-title'), titleText);
+      setText(box.querySelector('.live-game'), gameText);
+      setText(box.querySelector('.live-viewers'), viewersText);
+    });
     document.querySelectorAll('.cta-label').forEach(el => el.textContent = 'Ver stream');
     toggleClass($('navLiveDot'), 'is-live', true);
   }

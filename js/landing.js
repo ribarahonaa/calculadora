@@ -367,3 +367,96 @@
   checkLive();
   setInterval(checkLive, REFRESH_MS);
 })();
+
+/* ===== Chasquilla: mechones reactivos al cursor ===== */
+(function () {
+  const cha = document.getElementById('chasquilla');
+  if (!cha) return;
+
+  // Generar mechones densos por mitad
+  const STRANDS = 140;
+  ['.cha-half--left', '.cha-half--right'].forEach((sel) => {
+    const half = cha.querySelector(sel);
+    if (!half || half.querySelector('.cha-strand')) return;
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < STRANDS; i++) {
+      const s = document.createElement('span');
+      s.className = 'cha-strand';
+      const t = i / (STRANDS - 1);
+      const jitter = (Math.random() - 0.5) * 1.2;
+      const xPct = (t * 100 + jitter * 100 / STRANDS).toFixed(2);
+      const w = (5 + Math.random() * 8).toFixed(1);
+      const h = (84 + Math.random() * 16).toFixed(1);
+      const tone = Math.floor(Math.random() * 24);
+      s.style.cssText =
+        `left:${xPct}%;width:${w}px;height:${h}%;` +
+        `--tone:${tone};` +
+        `z-index:${Math.floor(Math.random() * 5)};`;
+      frag.appendChild(s);
+    }
+    half.appendChild(frag);
+  });
+
+  // Cache posiciones de mechones
+  const strands = Array.from(cha.querySelectorAll('.cha-strand'));
+  const cache = strands.map((el) => ({ el, x: 0, lastPush: 0 }));
+  function recache() {
+    cache.forEach((d) => {
+      const r = d.el.getBoundingClientRect();
+      d.x = r.left + r.width / 2;
+    });
+  }
+  recache();
+  window.addEventListener('resize', recache);
+
+  let raf = 0;
+  let mx = -1, my = -1;
+  const RANGE = 220;          // px alcance del empujón
+  const MAX_PUSH = 28;         // grados max
+  const HAIR_H = () => window.innerHeight * 0.5;
+
+  function tick() {
+    raf = 0;
+    const inside = mx >= 0 && my >= 0 && my < HAIR_H();
+    for (let i = 0; i < cache.length; i++) {
+      const d = cache[i];
+      let push = 0;
+      if (inside) {
+        const dx = d.x - mx;
+        const adx = Math.abs(dx);
+        if (adx < RANGE) {
+          const w = 1 - adx / RANGE;
+          // Mas profundo (mas cerca del borde inferior del cabello) = mas empuje
+          const yFactor = 0.5 + (my / HAIR_H()) * 0.7;
+          push = (dx >= 0 ? 1 : -1) * w * w * MAX_PUSH * yFactor;
+        }
+      }
+      if (Math.abs(d.lastPush - push) > 0.15) {
+        d.lastPush = push;
+        d.el.style.setProperty('--push', push.toFixed(2));
+      }
+    }
+  }
+  function schedule() {
+    if (!raf) raf = requestAnimationFrame(tick);
+  }
+  window.addEventListener('pointermove', (e) => {
+    mx = e.clientX; my = e.clientY;
+    schedule();
+  }, { passive: true });
+  window.addEventListener('pointerleave', () => { mx = -1; my = -1; schedule(); });
+  document.addEventListener('mouseleave', () => { mx = -1; my = -1; schedule(); });
+
+  // Touch: seguir + auto-relax
+  let touchClear = 0;
+  function handleTouch(e) {
+    const t = e.touches && e.touches[0];
+    if (!t) return;
+    mx = t.clientX; my = t.clientY;
+    schedule();
+    clearTimeout(touchClear);
+    touchClear = setTimeout(() => { mx = -1; my = -1; schedule(); }, 1200);
+  }
+  window.addEventListener('touchstart', handleTouch, { passive: true });
+  window.addEventListener('touchmove',  handleTouch, { passive: true });
+})();

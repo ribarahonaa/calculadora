@@ -4,7 +4,7 @@
   const REFRESH_MS = 60_000;
 
   // Star Wars Day feature flag. Set false to hide intro, FAB, and disable all triggers.
-  const SW_DAY_ENABLED = true;
+  const SW_DAY_ENABLED = false;
 
   const $ = id => document.getElementById(id);
 

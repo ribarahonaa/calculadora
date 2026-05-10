@@ -371,7 +371,7 @@
 /* ===== Chasquilla: mechones reactivos al cursor =====
    Toggle: cambiar CHASQUILLA_ENABLED a false para apagar (igual que SW_DAY_ENABLED). */
 (function () {
-  const CHASQUILLA_ENABLED = true;
+  const CHASQUILLA_ENABLED = false;
   const cha = document.getElementById('chasquilla');
   if (!cha) return;
   if (!CHASQUILLA_ENABLED) { cha.remove(); return; }

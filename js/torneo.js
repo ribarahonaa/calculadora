@@ -317,23 +317,16 @@
     $('modalName').textContent = nombre;
     $('modalMeta').textContent = `Tras ${state.ronda} ronda${state.ronda !== 1 ? 's' : ''}`;
     const modal = $('championModal');
-    modal.classList.remove('hidden');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    App.openModal(modal);
 
     // Confetti múltiples oleadas desde el modal
     const inner = modal.querySelector('.champion-modal-inner');
-    setTimeout(() => spawnConfetti(inner, 60), 200);
-    setTimeout(() => spawnConfetti(inner, 50), 800);
-    setTimeout(() => spawnConfetti(inner, 40), 1500);
-    setTimeout(() => spawnConfetti(inner, 30), 2300);
+    App.confettiVolley(inner, [[60, 200], [50, 800], [40, 1500], [30, 2300]]);
   }
 
   function cerrarModalCampeon() {
     const modal = $('championModal');
-    modal.classList.add('hidden');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    App.closeModal(modal);
   }
 
   // ============ Acciones auxiliares ============
@@ -348,9 +341,7 @@
   }
 
   function mezclar() {
-    const lista = parseParticipantes($('participantes').value);
-    if (lista.length === 0) return showErr('error', 'Lista vacía.');
-    $('participantes').value = shuffle(lista).join('\n');
+    if (!App.mezclar('participantes')) return showErr('error', 'Lista vacía.');
     actualizarConteo();
   }
 

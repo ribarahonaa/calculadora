@@ -115,21 +115,6 @@
     `;
   }
 
-  function disponibles() {
-    const excluir = [...draw.winners.filter(w => w !== null), ...draw.rerolled];
-    if (draw.permitir) {
-      const remaining = [...draw.pool];
-      excluir.forEach(w => {
-        const idx = remaining.indexOf(w);
-        if (idx >= 0) remaining.splice(idx, 1);
-      });
-      return remaining;
-    } else {
-      const set = new Set(excluir);
-      return draw.pool.filter(p => !set.has(p));
-    }
-  }
-
   // ============ Sortear ============
   async function sortear() {
     const permitir = $('permitirRepetidos').checked;
@@ -215,10 +200,7 @@
 
     // Explosión de confetti final
     const inner = $('winnersModal').querySelector('.champion-modal-inner');
-    spawnConfetti(inner, 80);
-    setTimeout(() => spawnConfetti(inner, 60), 350);
-    setTimeout(() => spawnConfetti(inner, 50), 800);
-    setTimeout(() => spawnConfetti(inner, 40), 1400);
+    App.confettiVolley(inner, [[80, 0], [60, 350], [50, 800], [40, 1400]]);
 
     // Mostrar acciones
     $('modalActions').style.display = 'flex';
@@ -247,9 +229,7 @@
     tombola.style.transform = '';
     tombola.innerHTML = '';
 
-    modal.classList.remove('hidden');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    App.openModal(modal);
   }
 
   function abrirModalListo() {
@@ -260,17 +240,13 @@
     $('modalTombola').classList.add('hidden');
     $('modalActions').style.display = 'flex';
     renderWinnersModal();
-    modal.classList.remove('hidden');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    App.openModal(modal);
   }
 
   function cerrarModal() {
     const modal = $('winnersModal');
     if (!modal) return;
-    modal.classList.add('hidden');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    App.closeModal(modal);
   }
 
   function addWinnerCardToModal(name, idx) {
@@ -449,9 +425,7 @@
 
   function mezclar() {
     const permitir = $('permitirRepetidos').checked;
-    const lista = parseParticipantes($('participantes').value, permitir);
-    if (lista.length === 0) return showErr('error', 'Lista vacía.');
-    $('participantes').value = shuffle(lista).join('\n');
+    if (!App.mezclar('participantes', permitir)) return showErr('error', 'Lista vacía.');
     actualizarConteo();
   }
 

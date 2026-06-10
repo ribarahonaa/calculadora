@@ -7,7 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Bricolage+Grotesque:wght@700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/torneo.css">
 </head>
 <body class="landing-body tool-page">
 
@@ -75,7 +76,7 @@
       <h2>Competidores</h2>
       <textarea id="participantes" placeholder="Goku&#10;Vegeta&#10;Piccolo&#10;...&#10;&#10;Para 2v2 escribe parejas: 'Goku & Vegeta', 'Trunks & Goten'..."></textarea>
       <div class="stats">
-        <span id="conteo">0 participantes</span>
+        <span id="conteo" aria-live="polite">0 participantes</span>
         <span>
           <a href="#" data-ej="1v1">1v1 (16)</a>
           ·
@@ -143,7 +144,7 @@
         <button class="btn-secondary" id="mezclar">🔀 Mezclar</button>
         <button class="btn-danger" id="limpiar">🗑 Limpiar</button>
       </div>
-      <div class="error hidden" id="error"></div>
+      <div class="error hidden" id="error" role="alert"></div>
     </div>
   </div>
 
@@ -195,7 +196,7 @@
       <div class="actions" style="margin-top:18px; justify-content:center">
         <button class="btn-fight" id="avanzar" style="flex:0 0 auto; min-width:280px">➡️ Avanzar a siguiente ronda</button>
       </div>
-      <div class="error hidden" id="errorRound" style="margin-top:14px"></div>
+      <div class="error hidden" id="errorRound" style="margin-top:14px" role="alert"></div>
 
       <div id="historia"></div>
       <div id="campeon"></div>
@@ -203,7 +204,7 @@
   </div>
 
   <!-- Modal campeón -->
-  <div id="championModal" class="modal hidden" aria-hidden="true">
+  <div id="championModal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Campeón del torneo" aria-hidden="true">
     <div class="modal-backdrop"></div>
     <div class="modal-content">
       <button class="modal-close" id="modalClose" aria-label="Cerrar">✕</button>

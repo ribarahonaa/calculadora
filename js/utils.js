@@ -39,12 +39,6 @@ App.showErr = function (elId, msg, ms = 4500) {
   e._timer = setTimeout(() => e.classList.add('hidden'), ms);
 };
 
-App.nextPow2 = function (n) {
-  let p = 1;
-  while (p < n) p *= 2;
-  return p;
-};
-
 App.spawnConfetti = function (originEl, count = 28, colors) {
   if (!originEl) return;
   const rect = originEl.getBoundingClientRect();
@@ -81,4 +75,61 @@ App.initials = function (name) {
   if (parts.length === 0) return '?';
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+};
+
+// Baraja el contenido de un textarea. Devuelve false si la lista está vacía.
+App.mezclar = function (textareaId, permitir = false) {
+  const el = App.$(textareaId);
+  if (!el) return false;
+  const lista = App.parseParticipantes(el.value, permitir);
+  if (lista.length === 0) return false;
+  el.value = App.shuffle(lista).join('\n');
+  return true;
+};
+
+// Lanza varias oleadas de confetti escalonadas. waves = [[count, delayMs], ...]
+App.confettiVolley = function (el, waves) {
+  waves.forEach(([count, delay]) => {
+    if (delay) setTimeout(() => App.spawnConfetti(el, count), delay);
+    else App.spawnConfetti(el, count);
+  });
+};
+
+// ===== Modales: abrir/cerrar con focus trap + restauración de foco =====
+let _modalLastFocus = null;
+let _modalTrap = null;
+
+function _focusables(modal) {
+  return Array.from(modal.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  )).filter(el => !el.disabled && el.offsetParent !== null);
+}
+
+App.openModal = function (modal) {
+  if (!modal) return;
+  _modalLastFocus = document.activeElement;
+  modal.classList.remove('hidden');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  const f = _focusables(modal);
+  if (f.length) f[0].focus();
+  _modalTrap = function (e) {
+    if (e.key !== 'Tab') return;
+    const list = _focusables(modal);
+    if (!list.length) return;
+    const first = list[0], last = list[list.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  };
+  document.addEventListener('keydown', _modalTrap, true);
+};
+
+App.closeModal = function (modal) {
+  if (!modal) return;
+  modal.classList.add('hidden');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+  if (_modalTrap) { document.removeEventListener('keydown', _modalTrap, true); _modalTrap = null; }
+  if (_modalLastFocus && _modalLastFocus.focus) { try { _modalLastFocus.focus(); } catch (e) {} }
+  _modalLastFocus = null;
 };

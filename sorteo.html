@@ -7,7 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Bricolage+Grotesque:wght@700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/sorteo.css">
 </head>
 <body class="landing-body tool-page">
 
@@ -75,7 +76,7 @@
       <label for="participantes">Participantes</label>
       <textarea id="participantes" placeholder="Juan Pérez&#10;María González&#10;Pedro Soto&#10;..."></textarea>
       <div class="stats">
-        <span id="conteo">0 participantes</span>
+        <span id="conteo" aria-live="polite">0 participantes</span>
         <a href="#" id="cargarEjemplo">cargar ejemplo</a>
       </div>
 
@@ -100,7 +101,7 @@
         <button class="btn-secondary" id="mezclar">🔀 Mezclar</button>
         <button class="btn-danger" id="limpiar">🗑 Limpiar</button>
       </div>
-      <div class="error hidden" id="error"></div>
+      <div class="error hidden" id="error" role="alert"></div>
     </div>
 
     <!-- Results -->
@@ -108,7 +109,7 @@
   </div>
 
   <!-- Modal ganadores con tombola integrada -->
-  <div id="winnersModal" class="modal hidden" aria-hidden="true">
+  <div id="winnersModal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Resultado del sorteo" aria-hidden="true">
     <div class="modal-backdrop"></div>
     <div class="modal-content modal-winners">
       <button class="modal-close" id="winnersClose" aria-label="Cerrar">✕</button>
@@ -117,7 +118,7 @@
         <div class="champion-label" id="winnersTitle">Sorteando...</div>
         <div class="rolling in-modal" id="modalTombola"></div>
         <div id="winnersModalList" class="winners-modal-list"></div>
-        <div class="modal-error hidden" id="modalError"></div>
+        <div class="modal-error hidden" id="modalError" role="alert"></div>
         <div class="modal-actions" id="modalActions" style="display:none">
           <button class="btn-primary" id="winnersAgain">🎲 Sortear de nuevo</button>
           <button class="btn-secondary" id="winnersDismiss">Cerrar</button>

@@ -1112,3 +1112,28 @@ html.flash-low .hero-pp::after { animation: none; display: none; }
   .live-badge { font-size: 0.58rem; padding: 4px 8px; }
   .btn-twitch, .btn-instagram { padding: 10px 12px; font-size: 0.82rem; }
 }
+
+/* Botón "volver a ver" la intro del Orgullo (footer, solo index) */
+.pride-replay-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px auto 4px;
+  padding: 9px 18px;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+    linear-gradient(90deg, #e40303, #ff8c00, #ffed00, #008026, #004dff, #750787) border-box;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.pride-replay-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(124, 92, 255, 0.35);
+}
+.pride-replay-btn:active { transform: scale(0.98); }

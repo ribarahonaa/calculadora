@@ -1113,27 +1113,54 @@ html.flash-low .hero-pp::after { animation: none; display: none; }
   .btn-twitch, .btn-instagram { padding: 10px 12px; font-size: 0.82rem; }
 }
 
-/* Botón "volver a ver" la intro del Orgullo (footer, solo index) */
-.pride-replay-btn {
+/* Botón "volver a ver" la intro estacional activa.
+   Lo inyecta seasonal-core.js en el hero (arriba-izquierda), solo durante el
+   mes activo de la campaña. Espeja al botón de Efectos (arriba-derecha). */
+.seasonal-cta {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 6;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin: 14px auto 4px;
-  padding: 9px 18px;
+  padding: 9px 16px;
   font: inherit;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  line-height: 1;
   color: #fff;
   cursor: pointer;
   border-radius: 999px;
   border: 1.5px solid transparent;
+  backdrop-filter: blur(10px);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  animation: seasonalCtaIn 0.5s 0.3s ease both;
+}
+.seasonal-cta:hover { transform: translateY(-2px) scale(1.04); }
+.seasonal-cta:active { transform: scale(0.98); }
+
+/* Orgullo: borde arcoíris sobre fondo oscuro translúcido */
+.seasonal-cta--pride {
   background:
-    linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+    linear-gradient(rgba(10, 7, 18, 0.7), rgba(10, 7, 18, 0.7)) padding-box,
     linear-gradient(90deg, #e40303, #ff8c00, #ffed00, #008026, #004dff, #750787) border-box;
-  transition: transform 0.2s, box-shadow 0.2s;
 }
-.pride-replay-btn:hover {
-  transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 8px 24px rgba(124, 92, 255, 0.35);
+.seasonal-cta--pride:hover { box-shadow: 0 8px 24px rgba(124, 92, 255, 0.45); }
+
+/* Star Wars: amarillo sable sobre negro */
+.seasonal-cta--sw {
+  color: #ffe81f;
+  border-color: rgba(255, 232, 31, 0.55);
+  background: radial-gradient(circle at 30% 25%, rgba(26, 31, 46, 0.85), rgba(5, 7, 12, 0.85) 70%);
+  box-shadow: inset 0 0 12px rgba(255, 232, 31, 0.08);
 }
-.pride-replay-btn:active { transform: scale(0.98); }
+.seasonal-cta--sw:hover { border-color: #ffe81f; box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 18px rgba(255, 232, 31, 0.4); }
+
+@keyframes seasonalCtaIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* En pantallas chicas, solo el icono (como el botón de Efectos) */
+@media (max-width: 480px) {
+  .seasonal-cta span { display: none; }
+  .seasonal-cta { padding: 9px; }
+}

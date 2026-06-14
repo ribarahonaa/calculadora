@@ -1,5 +1,15 @@
 /* landing.css — solo index.html (hero, carousel, secciones, photo-warn) */
 
+/* ÍNDICE (busca el título para saltar a la sección)
+   1.  Menu landing                      8.  Sponsor
+   2.  Hero                              9.  GAMES — Lo que estoy jugando
+   3.  Section títulos                  10.  FAQ
+   4.  Sobre mí                         11.  CONTACTO
+   5.  Socials                          12.  Playlist Spotify
+   6.  Tools                            13.  Hero carrousel (slides)
+   7.  Footer                           14.  Aviso fotosensibilidad (modal)
+                                        15.  Hero / live status — responsive */
+
 /* ============================================
    Menu landing
    ============================================ */
@@ -304,6 +314,7 @@ html.flash-low .hero-pp::after { animation: none; display: none; }
 }
 
 .live-info {
+  display: none; /* landing.js lo muestra (block) cuando el canal está en vivo */
   background: rgba(145, 70, 255, 0.12);
   border: 1px solid rgba(145, 70, 255, 0.4);
   border-radius: var(--radius);

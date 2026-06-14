@@ -1,5 +1,16 @@
 /* base.css — chrome compartido por todas las páginas (tokens, reset, nav, modal base, FABs, confetti) */
 
+/* ÍNDICE (busca el título para saltar a la sección)
+   1. Tema moderno — variables   (tokens de color/espaciado)
+   2. Layout shell               (.shell, contenedores de página)
+   3. Inputs                     (textarea, input, select, checkbox)
+   4. Card                       (.card, botones)
+   5. Modal campeón              (base de modales: backdrop, content, close)
+   6. LANDING PAWPAU             (landing-body, paw-bg, fondo)
+   7. NAVBAR PAWPAU              (.navbar-pp, brand, links, CTA, live-dot)
+   8. NAV DROPDOWN               (menú Tools desplegable)
+   9. FAB Redragon / Spotify     (botones flotantes, tooltip, panel, confetti) */
+
 /* ============================================
    Tema moderno — variables
    ============================================ */
@@ -832,6 +843,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   .fab-tooltip { display: none; }
 }
 
+/* =================================================================
    FAB Spotify (bottom-left)
    ================================================================= */
 .fab-spotify-wrap {

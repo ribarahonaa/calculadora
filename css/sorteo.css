@@ -440,3 +440,7 @@
   border: 1px solid rgba(244, 63, 94, 0.15);
 }
 
+
+/* Utilidades de layout (antes inline en sorteo.html) */
+.row--mt    { margin-top: 8px; }
+#modalActions { display: none; } /* sorteo.js lo muestra (flex) al terminar el sorteo */

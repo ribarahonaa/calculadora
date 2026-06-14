@@ -377,3 +377,18 @@
   text-shadow: 0 4px 24px rgba(251, 191, 36, 0.6);
 }
 
+
+/* ============================================
+   Utilidades de layout (antes inline en torneo.html)
+   ============================================ */
+#roundView { display: none; }       /* torneo.js lo muestra (block) al iniciar */
+#reset     { flex: 0 0 auto; }
+#avanzar   { flex: 0 0 auto; min-width: 280px; }
+#errorRound { margin-top: 14px; }
+
+.actions--end    { margin: 0; justify-content: flex-end; }
+.actions--center { margin-top: 18px; justify-content: center; }
+
+.row--mt   { margin-top: 8px; }
+.h3--mt    { margin-top: 18px; }
+.h3--flush { margin-top: 0; }
